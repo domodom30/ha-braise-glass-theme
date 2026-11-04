@@ -1,0 +1,1074 @@
+# =============================================================================
+#  BRAISE GLASS — Ember Glassmorphism theme for Home Assistant
+#  Version : 1.0.0
+#  Inspiration : thème « Braise » (Ember) de Domo TV — verre noir fumé,
+#                bords orange incandescents, braises qui montent
+#
+#  Thèmes fournis :
+#    • Braise Glass       → thème complet (modes dark + light), blur activé
+#    • Braise Glass Lite  → même design, sans backdrop-filter (tablettes/SBC lents)
+#
+#  Décor de fond : SVG intégré au thème (data URI) — aucun fichier à copier.
+#    Source : assets/braise_glass_{dark,light}.svg (tools/make_backdrop.py),
+#    intégré par tools/build_theme.py.
+#
+#  Variables --blue-glass-* : teinte « allumé » et séparateurs lus par des
+#  modules Bubble Card optionnels (voir README).
+#
+#  Organisation du fichier :
+#    1. TOKENS        → palette, transparences, ombres, blur, rayons, bordures
+#    2. SÉMANTIQUE    → variables officielles HA (couleurs, textes, états…)
+#    3. COMPOSANTS    → cartes, header, sidebar, dialogs, inputs, switches…
+#    4. CUSTOM CARDS  → Mushroom, Bubble Card, mini-media-player
+#    5. CARD-MOD      → raffinements optionnels (ignorés sans card-mod)
+# =============================================================================
+
+Braise Glass: &braise_glass
+  # ===========================================================================
+  # 1. TOKENS — communs aux deux modes
+  # ===========================================================================
+
+  # --- Palette de marque (Domo TV « Ember ») -----------------------------------
+  braise-coal-950: &coal_950 "#070708"   # fond (BG)
+  braise-coal-900: &coal_900 "#0E0A09"   # barre latérale (SIDE)
+  braise-coal-800: &coal_800 "#1A1210"   # carte (CARD)
+  braise-coal-700: &coal_700 "#261A15"
+  braise-coal-600: &coal_600 "#35241C"
+  braise-ember: &ember "#FF6A1F"         # lueur / focus (couleur de référence)
+  braise-ember-light: &ember_light "#FF8A3D"
+  braise-ember-dark: &ember_dark "#D9500F"
+  braise-flame: &flame "#FF7A1A"         # accent
+  braise-gold: &gold "#FFC27A"           # braises claires
+  braise-red: &red "#FF3B30"             # second ton des dégradés
+  braise-ash: &ash "#FFF4EC"             # texte
+  braise-white: &white "#FFFFFF"
+
+  # --- Texte sur surface accent (carte "héro" incandescente) -----------------
+  glass-on-accent: *white
+  glass-on-accent-secondary: "rgba(255, 255, 255, 0.84)"
+  glass-accent-border: "rgba(255, 194, 122, 0.50)"
+
+  # --- Couleurs fonctionnelles (sévérités) -----------------------------------
+  # Volontairement éloignées de l'orange de marque pour rester lisibles.
+  glass-success: &success "#3DDC97"
+  glass-warning: &warning "#FFD166"
+  glass-error: &error "#FF4D6A"
+  glass-info: &info "#5AC8FA"
+  glass-violet: &violet "#A78BFA"
+  glass-magenta: &magenta "#F472B6"
+  glass-orange: &orange "#FF7A1A"
+
+  # --- Blur / flou ------------------------------------------------------------
+  glass-blur: &blur "blur(22px) saturate(160%)"
+  glass-blur-strong: &blur_strong "blur(34px) saturate(170%)"
+  glass-blur-soft: &blur_soft "blur(10px) saturate(140%)"
+  glass-blur-scrim: &blur_scrim "blur(6px)"
+
+  # --- Rayons -----------------------------------------------------------------
+  glass-radius-xs: &radius_xs "8px"
+  glass-radius-sm: &radius_sm "12px"
+  glass-radius-md: &radius_md "18px"
+  glass-radius-lg: &radius_lg "24px"
+  glass-radius-xl: &radius_xl "30px"
+  glass-radius-pill: &radius_pill "999px"
+  glass-radius-card: &radius_card "16px"
+  glass-radius-dialog: &radius_dialog "20px"
+
+  # --- Bordures / épaisseurs --------------------------------------------------
+  glass-border-width: &border_width "1px"
+
+  # --- Animations -------------------------------------------------------------
+  glass-transition: "180ms cubic-bezier(0.2, 0.8, 0.2, 1)"
+
+  # --- Typographie ------------------------------------------------------------
+  ha-font-family-body: &font "Inter, \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+  ha-font-family-heading: *font
+  primary-font-family: *font
+  paper-font-common-base_-_font-family: *font
+  mdc-typography-font-family: *font
+  ha-card-header-font-size: "20px"
+  ha-font-weight-bold: "600"
+
+  # --- Rayons appliqués aux composants HA -------------------------------------
+  ha-card-border-radius: *radius_card
+  ha-card-border-width: *border_width
+  ha-border-radius-sm: *radius_xs
+  ha-border-radius-md: *radius_sm
+  ha-border-radius-lg: *radius_md
+  ha-border-radius-xl: *radius_lg
+  ha-border-radius-2xl: *radius_xl
+  ha-border-radius-pill: *radius_pill
+  ha-dialog-border-radius: *radius_dialog
+  ha-badge-border-radius: *radius_pill
+  ha-tooltip-border-radius: *radius_sm
+  feature-border-radius: *radius_sm
+  control-button-border-radius: *radius_sm
+  control-select-border-radius: *radius_sm
+  control-slider-border-radius: *radius_sm
+  control-switch-border-radius: *radius_sm
+  ha-assist-chip-container-shape: *radius_pill
+  ha-chip-border-radius: *radius_pill
+  mdc-shape-small: *radius_sm
+  mdc-shape-medium: *radius_md
+  mdc-shape-large: *radius_card
+  md-menu-container-shape: *radius_md
+  md-dialog-container-shape: *radius_dialog
+  md-filled-text-field-container-shape: *radius_sm
+  md-outlined-text-field-container-shape: *radius_sm
+  md-filled-select-text-field-container-shape: *radius_sm
+  md-outlined-select-text-field-container-shape: *radius_sm
+
+  # --- Flou appliqué aux composants HA ----------------------------------------
+  ha-card-backdrop-filter: *blur
+  app-header-backdrop-filter: *blur_strong
+  ha-dialog-surface-backdrop-filter: *blur_strong
+  ha-dialog-scrim-backdrop-filter: *blur_scrim
+  dialog-backdrop-filter: *blur_scrim
+
+  # --- Couleurs nommées (attribut `color:` des cartes/badges) ----------------
+  primary-color: *ember
+  accent-color: *flame
+  blue-color: "#4F8DFF"
+  light-blue-color: *info
+  cyan-color: "#38D6E8"
+  teal-color: "#2CC9B4"
+  green-color: *success
+  light-green-color: "#86E39B"
+  lime-color: "#C6E86B"
+  yellow-color: "#FFE07A"
+  amber-color: *warning
+  orange-color: *flame
+  deep-orange-color: *ember
+  red-color: *error
+  pink-color: *magenta
+  purple-color: "#C084FC"
+  deep-purple-color: *violet
+  indigo-color: "#818CF8"
+  brown-color: "#B98A6E"
+  grey-color: "#A89286"
+  blue-grey-color: "#8A7A72"
+  black-color: *coal_950
+  white-color: *white
+  disabled-color: "#6E5B51"
+
+  # --- Sévérités / statuts ----------------------------------------------------
+  success-color: *success
+  warning-color: *warning
+  error-color: *error
+  info-color: *info
+
+  # --- Énergie ----------------------------------------------------------------
+  energy-grid-consumption-color: *ember_light
+  energy-grid-return-color: *violet
+  energy-solar-color: *warning
+  energy-non-fossil-color: *success
+  energy-battery-out-color: *gold
+  energy-battery-in-color: "#2CC9B4"
+  energy-gas-color: *red
+  energy-water-color: *info
+
+  # --- Graphiques -------------------------------------------------------------
+  graph-color-1: *ember
+  graph-color-2: *gold
+  graph-color-3: *info
+  graph-color-4: *success
+  graph-color-5: *violet
+  graph-color-6: *magenta
+  graph-color-7: *warning
+  graph-color-8: "#2CC9B4"
+  graph-color-9: *red
+  graph-color-10: *ember_light
+  graph-color-11: "#818CF8"
+  graph-color-12: "#86E39B"
+
+  # --- Couleurs d'état par domaine -------------------------------------------
+  state-active-color: *flame
+  state-light-active-color: *gold
+  state-switch-active-color: *flame
+  state-input_boolean-active-color: *flame
+  state-fan-active-color: *flame
+  state-automation-active-color: *flame
+  state-script-active-color: *flame
+  state-media_player-active-color: *violet
+  state-cover-active-color: *flame
+  state-vacuum-active-color: "#2CC9B4"
+  state-humidifier-active-color: *info
+  state-humidifier-on-color: *info
+  state-siren-active-color: *error
+  state-update-active-color: *warning
+  state-valve-active-color: *flame
+  state-lawn_mower-active-color: *success
+  state-water_heater-active-color: *ember
+  state-binary_sensor-active-color: *flame
+  state-sensor-battery-high-color: *success
+  state-sensor-battery-medium-color: *warning
+  state-sensor-battery-low-color: *error
+  state-climate-heat-color: *ember
+  state-climate-cool-color: *info
+  state-climate-auto-color: *success
+  state-climate-heat_cool-color: *gold
+  state-climate-dry-color: *warning
+  state-climate-fan_only-color: "#2CC9B4"
+  state-lock-locked-color: *success
+  state-lock-unlocked-color: *error
+  state-lock-jammed-color: *error
+  state-lock-locking-color: *warning
+  state-lock-unlocking-color: *warning
+  state-lock-open-color: *error
+  state-lock-opening-color: *warning
+  state-alarm_control_panel-armed_away-color: *success
+  state-alarm_control_panel-armed_home-color: *success
+  state-alarm_control_panel-armed_night-color: *success
+  state-alarm_control_panel-armed_vacation-color: *success
+  state-alarm_control_panel-armed_custom_bypass-color: *success
+  state-alarm_control_panel-arming-color: *warning
+  state-alarm_control_panel-pending-color: *warning
+  state-alarm_control_panel-disarmed-color: *ember_light
+  state-alarm_control_panel-triggered-color: *error
+  state-person-home-color: *success
+  state-person-not_home-color: "#8A7A72"
+  state-device_tracker-home-color: *success
+  state-device_tracker-not_home-color: "#8A7A72"
+  state-sun-above_horizon-color: *warning
+  state-sun-below_horizon-color: *violet
+  state-weather-sunny-color: *warning
+
+  # --- Label badges (legacy) --------------------------------------------------
+  label-badge-red: *error
+  label-badge-blue: *ember
+  label-badge-green: *success
+  label-badge-yellow: *warning
+  label-badge-grey: "#8A7A72"
+
+  # --- Ripple / feedback interactif ------------------------------------------
+  ha-ripple-color: *flame
+  ha-ripple-hover-opacity: "0.08"
+  ha-ripple-pressed-opacity: "0.16"
+  md-ripple-hover-color: *flame
+  md-ripple-pressed-color: *flame
+  md-ripple-hover-opacity: "0.08"
+  md-ripple-pressed-opacity: "0.16"
+  mdc-ripple-color: *flame
+
+  # --- Tooltips (taille/padding) ----------------------------------------------
+  ha-tooltip-font-size: "13px"
+  ha-tooltip-padding: "8px 12px"
+
+  # --- Tile features / contrôles ---------------------------------------------
+  feature-height: "42px"
+  feature-button-spacing: "10px"
+  control-slider-thickness: "100%"
+  ha-badge-size: "38px"
+
+  # --- Mushroom (tokens communs) ---------------------------------------------
+  mush-spacing: "12px"
+  mush-card-primary-font-size: "14px"
+  mush-card-secondary-font-size: "12px"
+  mush-card-primary-font-weight: "600"
+  mush-card-secondary-font-weight: "400"
+  mush-title-font-size: "24px"
+  mush-title-font-weight: "600"
+  mush-subtitle-font-size: "15px"
+  mush-icon-size: "40px"
+  mush-icon-border-radius: "50%"
+  mush-control-height: "42px"
+  mush-control-border-radius: *radius_sm
+  mush-chip-height: "36px"
+  mush-chip-border-radius: *radius_pill
+  mush-chip-spacing: "8px"
+  mush-chip-icon-size: "18px"
+  mush-chip-font-size: "13px"
+  mush-chip-font-weight: "600"
+  mush-badge-border-radius: *radius_pill
+  mush-card-border-radius: *radius_card
+  mush-rgb-red: "255, 77, 106"
+  mush-rgb-pink: "244, 114, 182"
+  mush-rgb-purple: "192, 132, 252"
+  mush-rgb-deep-purple: "167, 139, 250"
+  mush-rgb-indigo: "129, 140, 248"
+  mush-rgb-blue: "79, 141, 255"
+  mush-rgb-light-blue: "90, 200, 250"
+  mush-rgb-cyan: "56, 214, 232"
+  mush-rgb-teal: "44, 201, 180"
+  mush-rgb-green: "61, 220, 151"
+  mush-rgb-light-green: "134, 227, 155"
+  mush-rgb-lime: "198, 232, 107"
+  mush-rgb-yellow: "255, 224, 122"
+  mush-rgb-amber: "255, 209, 102"
+  mush-rgb-orange: "255, 122, 26"
+  mush-rgb-deep-orange: "255, 106, 31"
+  mush-rgb-brown: "185, 138, 110"
+  mush-rgb-grey: "168, 146, 134"
+  mush-rgb-blue-grey: "138, 122, 114"
+  mush-rgb-info: "90, 200, 250"
+  mush-rgb-success: "61, 220, 151"
+  mush-rgb-warning: "255, 209, 102"
+  mush-rgb-danger: "255, 77, 106"
+  mush-rgb-state-light: "255, 194, 122"
+  mush-rgb-state-fan: "255, 122, 26"
+  mush-rgb-state-cover: "255, 138, 61"
+  mush-rgb-state-media-player: "167, 139, 250"
+  mush-rgb-state-climate-heat: "255, 106, 31"
+  mush-rgb-state-climate-cool: "90, 200, 250"
+  mush-rgb-state-climate-auto: "61, 220, 151"
+  mush-rgb-state-climate-dry: "255, 209, 102"
+  mush-rgb-state-climate-fan-only: "44, 201, 180"
+  mush-rgb-state-climate-heat-cool: "255, 194, 122"
+  mush-rgb-state-lock-locked: "61, 220, 151"
+  mush-rgb-state-lock-unlocked: "255, 77, 106"
+  mush-rgb-state-lock-pending: "255, 209, 102"
+  mush-rgb-state-alarm-disarmed: "255, 138, 61"
+  mush-rgb-state-alarm-armed: "61, 220, 151"
+  mush-rgb-state-alarm-triggered: "255, 77, 106"
+  mush-rgb-state-person-home: "61, 220, 151"
+  mush-rgb-state-person-not-home: "138, 122, 114"
+  mush-rgb-state-person-zone: "167, 139, 250"
+  mush-rgb-state-person-unknown: "138, 122, 114"
+
+  # --- Bubble Card (tokens communs) ------------------------------------------
+  bubble-accent-color: *ember
+  bubble-border-radius: *radius_card
+  bubble-button-border-radius: *radius_md
+  bubble-pop-up-border-radius: *radius_dialog
+  bubble-icon-border-radius: "50%"
+  bubble-select-list-border-radius: *radius_md
+  # Carte serrure : verrouillée = accent ; déverrouillée/ouverte/bloquée = rouge
+  bubble-lock-warning-color: *error
+  # Halo de l'icône « allumé » (module bubble blue_glass_state)
+  blue-glass-icon-glow-blur: "4px"
+  blue-glass-icon-glow-alpha: "0.55"
+  blue-glass-icon-halo-blur: "8px"
+  blue-glass-icon-halo-alpha: "0.28"
+  blue-glass-slider-fill-alpha: "0.38"
+  # Séparateurs (module bubble blue_glass_separator)
+  blue-glass-separator-height: "1px"
+  blue-glass-separator-opacity: "0.8"
+  blue-glass-separator-glow-alpha: "0.65"
+  blue-glass-separator-icon-glow: "5px"
+
+  # --- Mini Media Player (tokens communs) ------------------------------------
+  mmp-accent-color: *flame
+  mmp-icon-active-color: *flame
+  mmp-border-radius: *radius_card
+
+  # ===========================================================================
+  # 2-4. MODES — valeurs spécifiques sombre / clair
+  # ===========================================================================
+  modes:
+    # =========================================================================
+    #  DARK — mode de référence (verre noir fumé + bords incandescents)
+    # =========================================================================
+    dark: &dark
+      # --- Surfaces de verre (tokens) ----------------------------------------
+      glass-surface: &d_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(26, 18, 16, 0.42) 42%, rgba(20, 12, 10, 0.56) 100%)"
+      glass-surface-solid: &d_surface_solid "rgba(26, 18, 16, 0.95)"
+      glass-surface-strong: &d_surface_strong "rgba(22, 15, 13, 0.80)"
+      glass-surface-raised: &d_surface_raised "rgba(255, 122, 26, 0.08)"
+      glass-surface-hover: &d_surface_hover "rgba(255, 122, 26, 0.12)"
+      glass-surface-active: &d_surface_active "rgba(255, 122, 26, 0.20)"
+      glass-surface-selected: &d_surface_selected "rgba(255, 106, 31, 0.26)"
+      glass-surface-input: &d_surface_input "rgba(10, 7, 6, 0.50)"
+      glass-surface-input-hover: &d_surface_input_hover "rgba(20, 13, 11, 0.65)"
+      glass-accent-surface: &d_accent_surface "linear-gradient(140deg, rgba(255, 138, 61, 0.92) 0%, rgba(255, 106, 31, 0.82) 50%, rgba(255, 61, 46, 0.78) 100%)"
+      glass-border: &d_border "rgba(255, 122, 26, 0.20)"
+      glass-border-strong: &d_border_strong "rgba(255, 138, 61, 0.36)"
+      glass-border-glow: &d_border_glow "rgba(255, 106, 31, 0.65)"
+      glass-divider: &d_divider "rgba(255, 170, 120, 0.12)"
+      glass-highlight: "rgba(255, 255, 255, 0.22)"
+      # Bord spéculaire : reflet blanc en haut, braise orange en bas (comme sur la TV)
+      glass-shadow: &d_shadow "0 10px 34px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.20), inset 0 -1px 0 rgba(255, 106, 31, 0.55), 0 8px 22px -12px rgba(255, 106, 31, 0.45)"
+      glass-shadow-hover: "0 16px 44px rgba(0, 0, 0, 0.60), 0 0 0 1px rgba(255, 122, 26, 0.32), 0 0 26px rgba(255, 106, 31, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 -1px 0 rgba(255, 106, 31, 0.80)"
+      glass-shadow-dialog: &d_shadow_dialog "0 30px 80px rgba(0, 0, 0, 0.70), 0 0 0 1px rgba(255, 122, 26, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(255, 106, 31, 0.50)"
+      glass-glow: "0 0 18px rgba(255, 106, 31, 0.50)"
+      glass-scrollbar: &d_scrollbar "rgba(255, 122, 26, 0.32)"
+      glass-page-background: &d_page "url(\"{{BACKDROP_DARK}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 77, 18, 0.55) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 122, 26, 0.18) 0%, transparent 60%) fixed, radial-gradient(ellipse 40% 45% at 5% 52%, rgba(255, 59, 48, 0.14) 0%, transparent 60%) fixed, linear-gradient(165deg, #0C0A0B 0%, #070607 50%, #0B0706 100%) fixed"
+
+      # --- Textes ------------------------------------------------------------
+      primary-text-color: &d_text "#FFF4EC"
+      secondary-text-color: &d_text2 "#B89D8C"
+      disabled-text-color: &d_text_disabled "#7A665B"
+      text-primary-color: "#FFFFFF"
+      text-light-primary-color: *d_text
+      rgb-primary-text-color: "255, 244, 236"
+      rgb-secondary-text-color: "184, 157, 140"
+      rgb-text-primary-color: "255, 255, 255"
+
+      # --- Couleurs principales ----------------------------------------------
+      primary-color: *ember
+      dark-primary-color: *ember_dark
+      light-primary-color: *ember_light
+      accent-color: *flame
+      rgb-primary-color: "255, 106, 31"
+      rgb-accent-color: "255, 122, 26"
+
+      # --- Fonds -------------------------------------------------------------
+      primary-background-color: *coal_900
+      secondary-background-color: *coal_800
+      clear-background-color: *coal_900
+      card-background-color: *d_surface_solid
+      rgb-primary-background-color: "14, 10, 9"
+      rgb-card-background-color: "26, 18, 16"
+      lovelace-background: *d_page
+      divider-color: *d_divider
+      outline-color: *d_border
+      outline-hover-color: *d_border_strong
+
+      # --- Cartes ------------------------------------------------------------
+      ha-card-background: *d_surface
+      ha-card-border-color: *d_border
+      ha-card-box-shadow: *d_shadow
+      ha-card-header-color: *d_text
+      ha-section-background-color: "rgba(14, 10, 9, 0.24)"
+
+      # --- Icônes & états ----------------------------------------------------
+      state-icon-color: *flame
+      state-icon-active-color: *flame
+      state-icon-unavailable-color: *d_text_disabled
+      paper-item-icon-color: "#D9A88A"
+      paper-item-icon-active-color: *flame
+      state-inactive-color: "#8A7A72"
+      state-unavailable-color: "#5E4E46"
+      history-unavailable-color: "rgba(94, 78, 70, 0.45)"
+      history-unknown-color: "rgba(94, 78, 70, 0.30)"
+
+      # --- Header / toolbar / onglets ----------------------------------------
+      app-header-background-color: "rgba(10, 7, 6, 0.58)"
+      app-header-text-color: *d_text
+      app-header-selection-bar-color: *ember
+      app-header-edit-background-color: "rgba(120, 40, 8, 0.88)"
+      app-header-edit-text-color: *d_text
+      app-header-border-bottom: "1px solid rgba(255, 122, 26, 0.16)"
+      ha-tab-indicator-color: *ember
+      ha-tab-active-text-color: *ember_light
+      ha-tab-track-color: *d_divider
+      mdc-tab-text-label-color-default: *d_text2
+      mdc-tab-color-default: *d_text2
+
+      # --- Sidebar / navigation ----------------------------------------------
+      sidebar-background-color: "rgba(14, 10, 9, 0.92)"
+      sidebar-text-color: *d_text2
+      sidebar-icon-color: "#C49A80"
+      sidebar-selected-text-color: *ember_light
+      sidebar-selected-icon-color: *ember
+      sidebar-menu-button-text-color: *d_text
+      sidebar-menu-button-background-color: "transparent"
+      sidebar-border-color: *d_divider
+
+      # --- Dialogs / modals / more-info / popups ------------------------------
+      ha-dialog-surface-background: "rgba(22, 15, 13, 0.78)"
+      mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.58)"
+      mdc-dialog-heading-ink-color: *d_text
+      mdc-dialog-content-ink-color: *d_text2
+      dialog-box-shadow: *d_shadow_dialog
+      md-dialog-container-color: "rgba(22, 15, 13, 0.95)"
+      ha-bottom-sheet-surface-background: "rgba(22, 15, 13, 0.95)"
+      more-info-header-background: "transparent"
+
+      # --- Menus / dropdowns / listes ----------------------------------------
+      mdc-theme-surface: *d_surface_solid
+      mdc-theme-on-surface: *d_text
+      mdc-theme-primary: *ember
+      mdc-theme-secondary: *flame
+      mdc-theme-on-primary: "#FFFFFF"
+      mdc-theme-on-secondary: *coal_950
+      mdc-theme-background: *coal_900
+      mdc-theme-text-primary-on-background: *d_text
+      mdc-theme-text-secondary-on-background: *d_text2
+      mdc-theme-text-hint-on-background: *d_text2
+      mdc-theme-text-icon-on-background: *d_text2
+      mdc-theme-text-disabled-on-light: *d_text_disabled
+      md-menu-container-color: *d_surface_solid
+      md-sys-color-surface: *coal_900
+      md-sys-color-surface-container: *d_surface_solid
+      md-sys-color-surface-container-high: "rgba(38, 26, 21, 0.97)"
+      md-sys-color-surface-container-highest: "rgba(53, 36, 28, 0.97)"
+      md-sys-color-on-surface: *d_text
+      md-sys-color-on-surface-variant: *d_text2
+      md-sys-color-primary: *ember_light
+      md-sys-color-on-primary: "#FFFFFF"
+      md-sys-color-secondary-container: *d_surface_selected
+      md-sys-color-on-secondary-container: *d_text
+      md-sys-color-outline: *d_border_strong
+      md-sys-color-outline-variant: *d_divider
+      md-list-item-label-text-color: *d_text
+      md-list-item-supporting-text-color: *d_text2
+      md-list-item-leading-icon-color: "#D9A88A"
+      md-list-item-trailing-icon-color: *d_text2
+      md-list-item-hover-state-layer-color: *flame
+      md-menu-item-selected-container-color: *d_surface_selected
+      mdc-list-item-meta-color: *d_text2
+
+      # --- Inputs / text fields / sélecteurs ---------------------------------
+      input-fill-color: *d_surface_input
+      input-disabled-fill-color: "rgba(10, 7, 6, 0.25)"
+      input-ink-color: *d_text
+      input-label-ink-color: *d_text2
+      input-disabled-ink-color: *d_text_disabled
+      input-idle-line-color: *d_border
+      input-hover-line-color: *d_border_glow
+      input-disabled-line-color: "rgba(255, 122, 26, 0.08)"
+      input-outlined-idle-border-color: *d_border
+      input-outlined-hover-border-color: *d_border_glow
+      input-outlined-disabled-border-color: "rgba(255, 122, 26, 0.08)"
+      input-dropdown-icon-color: *d_text2
+      mdc-text-field-fill-color: *d_surface_input
+      mdc-text-field-ink-color: *d_text
+      mdc-text-field-label-ink-color: *d_text2
+      mdc-text-field-idle-line-color: *d_border
+      mdc-text-field-hover-line-color: *d_border_glow
+      mdc-text-field-disabled-fill-color: "rgba(10, 7, 6, 0.25)"
+      mdc-text-field-disabled-ink-color: *d_text_disabled
+      mdc-text-field-disabled-line-color: "rgba(255, 122, 26, 0.08)"
+      mdc-text-field-outlined-idle-border-color: *d_border
+      mdc-text-field-outlined-hover-border-color: *d_border_glow
+      mdc-text-field-outlined-disabled-border-color: "rgba(255, 122, 26, 0.08)"
+      mdc-select-fill-color: *d_surface_input
+      mdc-select-ink-color: *d_text
+      mdc-select-label-ink-color: *d_text2
+      mdc-select-idle-line-color: *d_border
+      mdc-select-hover-line-color: *d_border_glow
+      mdc-select-dropdown-icon-color: *d_text2
+      mdc-select-disabled-ink-color: *d_text_disabled
+      md-filled-text-field-container-color: *d_surface_input
+      md-filled-select-text-field-container-color: *d_surface_input
+      md-sys-color-surface-container-low: *d_surface_input
+      code-editor-background-color: "rgba(7, 7, 8, 0.72)"
+      codemirror-property: *ember_light
+      codemirror-keyword: *gold
+      codemirror-string: *success
+      codemirror-number: *warning
+      codemirror-atom: *magenta
+      codemirror-comment: "#7A665B"
+      markdown-code-background-color: "rgba(7, 7, 8, 0.55)"
+
+      # --- Switches / toggles ------------------------------------------------
+      switch-checked-color: *ember_light
+      switch-checked-button-color: "#FFFFFF"
+      switch-checked-track-color: *ember
+      switch-unchecked-color: *d_text2
+      switch-unchecked-button-color: "#E3CFC2"
+      switch-unchecked-track-color: "rgba(255, 170, 120, 0.26)"
+      switch-disabled-color: "#5E4E46"
+      mdc-switch-handle-surface-color: *d_surface_solid
+      mdc-checkbox-unchecked-color: *d_text2
+      mdc-checkbox-checked-color: *ember
+      mdc-checkbox-ink-color: "#FFFFFF"
+      mdc-checkbox-disabled-color: *d_text_disabled
+      mdc-radio-unchecked-color: *d_text2
+      mdc-radio-checked-color: *ember
+      mdc-radio-disabled-color: *d_text_disabled
+
+      # --- Sliders / progress bars / gauges ----------------------------------
+      slider-color: *ember
+      slider-secondary-color: *red
+      slider-track-color: "rgba(255, 170, 120, 0.20)"
+      paper-slider-knob-color: *ember_light
+      paper-slider-active-color: *ember
+      paper-slider-secondary-color: *red
+      paper-slider-container-color: "rgba(255, 170, 120, 0.20)"
+      md-slider-handle-color: "#FFFFFF"
+      md-slider-active-track-color: *ember
+      md-slider-inactive-track-color: "rgba(255, 170, 120, 0.20)"
+      ha-slider-thumb-color: "#FFFFFF"
+      ha-bar-primary-color: *ember
+      ha-bar-background-color: "rgba(255, 170, 120, 0.14)"
+      md-linear-progress-active-indicator-color: *ember
+      md-linear-progress-track-color: "rgba(255, 170, 120, 0.14)"
+      md-circular-progress-active-indicator-color: *ember
+      gauge-background-color: "rgba(255, 170, 120, 0.12)"
+      control-slider-background-opacity: "0.18"
+      control-select-background-opacity: "0.18"
+      control-button-background-opacity: "0.18"
+      control-switch-background-opacity: "0.18"
+
+      # --- Badges / chips / labels -------------------------------------------
+      label-badge-background-color: *d_surface_strong
+      label-badge-text-color: *d_text
+      ha-label-badge-color: *d_text
+      ha-assist-chip-filled-container-color: *d_surface_raised
+      md-assist-chip-outline-color: *d_border
+      md-filter-chip-outline-color: *d_border
+      md-filter-chip-selected-container-color: *d_surface_selected
+      md-input-chip-outline-color: *d_border
+
+      # --- Tooltips ----------------------------------------------------------
+      ha-tooltip-background-color: "rgba(26, 18, 16, 0.97)"
+      ha-tooltip-text-color: *d_text
+      paper-tooltip-background: "rgba(26, 18, 16, 0.97)"
+      paper-tooltip-text-color: *d_text
+      paper-tooltip-opacity: "1"
+
+      # --- Tableaux / data tables --------------------------------------------
+      data-table-background-color: "transparent"
+      table-row-background-color: "transparent"
+      table-row-alternative-background-color: "rgba(255, 122, 26, 0.04)"
+      table-header-background-color: "rgba(10, 7, 6, 0.42)"
+
+      # --- Scrollbars / focus / divers ---------------------------------------
+      scrollbar-thumb-color: *d_scrollbar
+      md-focus-ring-color: *ember
+      ha-focus-ring-color: *ember
+      map-filter: "invert(0.92) hue-rotate(180deg) brightness(1.0) saturate(0.45) sepia(0.25) contrast(0.95)"
+
+      # --- Bubble Card -------------------------------------------------------
+      # Teinte « allumé » (R, G, B) lue par les modules bubble blue_glass_*
+      blue-glass-on-rgb: "255, 122, 26"
+      blue-glass-separator-rgb: "255, 106, 31"
+      bubble-line-background-color: "rgb(255, 106, 31)"
+      bubble-main-background-color: "rgba(26, 18, 16, 0.46)"
+      bubble-secondary-background-color: "rgba(255, 122, 26, 0.10)"
+      bubble-button-main-background-color: "rgba(26, 18, 16, 0.46)"
+      bubble-button-icon-background-color: "rgba(255, 122, 26, 0.12)"
+      bubble-icon-background-color: "rgba(255, 122, 26, 0.12)"
+      bubble-media-player-main-background-color: "rgba(26, 18, 16, 0.46)"
+      bubble-select-main-background-color: "rgba(26, 18, 16, 0.46)"
+      bubble-select-list-background-color: *d_surface_solid
+      bubble-select-list-item-accent-color: *flame
+      bubble-pop-up-background-color: "rgba(16, 11, 10, 0.76)"
+      bubble-pop-up-main-background-color: "rgba(26, 18, 16, 0.46)"
+      bubble-backdrop-background-color: "rgba(0, 0, 0, 0.48)"
+      bubble-border: "1px solid rgba(255, 122, 26, 0.20)"
+      bubble-box-shadow: *d_shadow
+
+      # --- Mini Media Player -------------------------------------------------
+      mmp-text-color: *d_text
+      mmp-icon-color: "#D9A88A"
+      mmp-media-cover-info-color: *d_text
+      mmp-bg-opacity: "0.55"
+      mmp-overlay-base-color: "rgba(7, 7, 8, 0.6)"
+
+      # --- Mushroom ----------------------------------------------------------
+      mush-chip-background: "rgba(26, 18, 16, 0.42)"
+      mush-chip-box-shadow: *d_shadow
+      mush-rgb-disabled: "94, 78, 70"
+      mush-rgb-white: "255, 244, 236"
+      mush-rgb-black: "7, 7, 8"
+
+    # =========================================================================
+    #  LIGHT — "Cendre" : verre crème, lueurs pêche, braise orange brûlé
+    # =========================================================================
+    light: &light
+      # --- Surfaces de verre (tokens) ----------------------------------------
+      glass-surface: &l_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 248, 242, 0.54) 50%, rgba(255, 214, 184, 0.34) 100%)"
+      glass-surface-solid: &l_surface_solid "rgba(255, 250, 246, 0.97)"
+      glass-surface-strong: &l_surface_strong "rgba(255, 255, 255, 0.80)"
+      glass-surface-raised: &l_surface_raised "rgba(224, 86, 15, 0.07)"
+      glass-surface-hover: &l_surface_hover "rgba(224, 86, 15, 0.10)"
+      glass-surface-active: &l_surface_active "rgba(224, 86, 15, 0.16)"
+      glass-surface-selected: &l_surface_selected "rgba(224, 86, 15, 0.15)"
+      glass-surface-input: &l_surface_input "rgba(255, 255, 255, 0.58)"
+      glass-surface-input-hover: &l_surface_input_hover "rgba(255, 255, 255, 0.78)"
+      glass-accent-surface: &l_accent_surface "linear-gradient(140deg, rgba(234, 88, 12, 0.94) 0%, rgba(220, 70, 20, 0.90) 55%, rgba(200, 45, 30, 0.88) 100%)"
+      glass-border: &l_border "rgba(255, 255, 255, 0.80)"
+      glass-border-strong: &l_border_strong "rgba(194, 65, 12, 0.26)"
+      glass-border-glow: &l_border_glow "rgba(224, 86, 15, 0.50)"
+      glass-divider: &l_divider "rgba(90, 40, 15, 0.12)"
+      glass-highlight: "rgba(255, 255, 255, 0.92)"
+      glass-shadow: &l_shadow "0 10px 30px rgba(120, 50, 10, 0.14), 0 2px 6px rgba(120, 50, 10, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(255, 106, 31, 0.35)"
+      glass-shadow-hover: "0 16px 40px rgba(120, 50, 10, 0.20), 0 0 0 1px rgba(224, 86, 15, 0.24), 0 0 24px rgba(255, 138, 61, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(255, 106, 31, 0.55)"
+      glass-shadow-dialog: &l_shadow_dialog "0 30px 80px rgba(120, 50, 10, 0.26), 0 0 0 1px rgba(255, 255, 255, 0.70), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
+      glass-glow: "0 0 16px rgba(224, 86, 15, 0.35)"
+      glass-scrollbar: &l_scrollbar "rgba(194, 65, 12, 0.28)"
+      glass-page-background: &l_page "url(\"{{BACKDROP_LIGHT}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 122, 46, 0.32) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 194, 122, 0.32) 0%, transparent 60%) fixed, linear-gradient(165deg, #FCF7F2 0%, #F8EEE5 50%, #F4E6DA 100%) fixed"
+
+      # --- Textes ------------------------------------------------------------
+      primary-text-color: &l_text "#2B1A12"
+      secondary-text-color: &l_text2 "#6B5144"
+      disabled-text-color: &l_text_disabled "#AD978A"
+      text-primary-color: "#FFFFFF"
+      text-light-primary-color: *l_text
+      rgb-primary-text-color: "43, 26, 18"
+      rgb-secondary-text-color: "107, 81, 68"
+      rgb-text-primary-color: "255, 255, 255"
+
+      # --- Couleurs principales (assombries pour le contraste sur fond clair) -
+      primary-color: "#C2410C"
+      dark-primary-color: "#9A3412"
+      light-primary-color: "#EA580C"
+      accent-color: "#E0560F"
+      rgb-primary-color: "194, 65, 12"
+      rgb-accent-color: "224, 86, 15"
+
+      # --- Fonds -------------------------------------------------------------
+      primary-background-color: "#FBF4EE"
+      secondary-background-color: "#F3E6DA"
+      clear-background-color: "#FBF4EE"
+      card-background-color: *l_surface_solid
+      rgb-primary-background-color: "251, 244, 238"
+      rgb-card-background-color: "255, 250, 246"
+      lovelace-background: *l_page
+      divider-color: *l_divider
+      outline-color: *l_border_strong
+      outline-hover-color: *l_border_glow
+
+      # --- Cartes ------------------------------------------------------------
+      ha-card-background: *l_surface
+      ha-card-border-color: *l_border
+      ha-card-box-shadow: *l_shadow
+      ha-card-header-color: *l_text
+      ha-section-background-color: "rgba(255, 255, 255, 0.22)"
+
+      # --- Icônes & états ----------------------------------------------------
+      state-icon-color: "#E0560F"
+      state-icon-active-color: "#E0560F"
+      state-icon-unavailable-color: *l_text_disabled
+      paper-item-icon-color: "#9A5A3A"
+      paper-item-icon-active-color: "#E0560F"
+      state-active-color: "#E0560F"
+      state-switch-active-color: "#E0560F"
+      state-input_boolean-active-color: "#E0560F"
+      state-fan-active-color: "#E0560F"
+      state-binary_sensor-active-color: "#E0560F"
+      state-automation-active-color: "#E0560F"
+      state-script-active-color: "#E0560F"
+      state-cover-active-color: "#E0560F"
+      state-valve-active-color: "#E0560F"
+      state-light-active-color: "#F59E0B"
+      state-climate-cool-color: "#0EA5E9"
+      state-humidifier-active-color: "#0EA5E9"
+      state-humidifier-on-color: "#0EA5E9"
+      state-inactive-color: "#9A8478"
+      state-unavailable-color: "#C2B1A6"
+      history-unavailable-color: "rgba(154, 132, 120, 0.35)"
+      history-unknown-color: "rgba(154, 132, 120, 0.22)"
+      success-color: "#16A34A"
+      warning-color: "#D97706"
+      error-color: "#DC2647"
+      info-color: "#0284C7"
+      green-color: "#16A34A"
+      amber-color: "#D97706"
+      red-color: "#DC2647"
+      state-sensor-battery-high-color: "#16A34A"
+      state-sensor-battery-medium-color: "#D97706"
+      state-sensor-battery-low-color: "#DC2647"
+      state-lock-locked-color: "#16A34A"
+      state-lock-unlocked-color: "#DC2647"
+      state-lock-jammed-color: "#DC2647"
+      state-lock-open-color: "#DC2647"
+      bubble-lock-warning-color: "#DC2647"
+
+      # --- Header / toolbar / onglets ----------------------------------------
+      app-header-background-color: "rgba(252, 246, 240, 0.64)"
+      app-header-text-color: *l_text
+      app-header-selection-bar-color: "#C2410C"
+      app-header-edit-background-color: "rgba(194, 65, 12, 0.92)"
+      app-header-edit-text-color: "#FFFFFF"
+      app-header-border-bottom: "1px solid rgba(90, 40, 15, 0.10)"
+      ha-tab-indicator-color: "#C2410C"
+      ha-tab-active-text-color: "#C2410C"
+      ha-tab-track-color: *l_divider
+      mdc-tab-text-label-color-default: *l_text2
+      mdc-tab-color-default: *l_text2
+
+      # --- Sidebar / navigation ----------------------------------------------
+      sidebar-background-color: "rgba(250, 242, 235, 0.95)"
+      sidebar-text-color: *l_text2
+      sidebar-icon-color: "#8A5A42"
+      sidebar-selected-text-color: "#C2410C"
+      sidebar-selected-icon-color: "#C2410C"
+      sidebar-menu-button-text-color: *l_text
+      sidebar-menu-button-background-color: "transparent"
+      sidebar-border-color: *l_divider
+
+      # --- Dialogs / modals / more-info / popups ------------------------------
+      ha-dialog-surface-background: "rgba(255, 249, 244, 0.82)"
+      mdc-dialog-scrim-color: "rgba(43, 26, 18, 0.28)"
+      mdc-dialog-heading-ink-color: *l_text
+      mdc-dialog-content-ink-color: *l_text2
+      dialog-box-shadow: *l_shadow_dialog
+      md-dialog-container-color: *l_surface_solid
+      ha-bottom-sheet-surface-background: *l_surface_solid
+      more-info-header-background: "transparent"
+
+      # --- Menus / dropdowns / listes ----------------------------------------
+      mdc-theme-surface: *l_surface_solid
+      mdc-theme-on-surface: *l_text
+      mdc-theme-primary: "#C2410C"
+      mdc-theme-secondary: "#E0560F"
+      mdc-theme-on-primary: "#FFFFFF"
+      mdc-theme-on-secondary: "#FFFFFF"
+      mdc-theme-background: "#FBF4EE"
+      mdc-theme-text-primary-on-background: *l_text
+      mdc-theme-text-secondary-on-background: *l_text2
+      mdc-theme-text-hint-on-background: *l_text2
+      mdc-theme-text-icon-on-background: *l_text2
+      mdc-theme-text-disabled-on-light: *l_text_disabled
+      md-menu-container-color: *l_surface_solid
+      md-sys-color-surface: "#FBF4EE"
+      md-sys-color-surface-container: *l_surface_solid
+      md-sys-color-surface-container-high: "rgba(250, 240, 232, 0.98)"
+      md-sys-color-surface-container-highest: "rgba(244, 230, 218, 0.98)"
+      md-sys-color-on-surface: *l_text
+      md-sys-color-on-surface-variant: *l_text2
+      md-sys-color-primary: "#C2410C"
+      md-sys-color-on-primary: "#FFFFFF"
+      md-sys-color-secondary-container: *l_surface_selected
+      md-sys-color-on-secondary-container: *l_text
+      md-sys-color-outline: *l_border_strong
+      md-sys-color-outline-variant: *l_divider
+      md-list-item-label-text-color: *l_text
+      md-list-item-supporting-text-color: *l_text2
+      md-list-item-leading-icon-color: "#9A5A3A"
+      md-list-item-trailing-icon-color: *l_text2
+      md-list-item-hover-state-layer-color: "#C2410C"
+      md-menu-item-selected-container-color: *l_surface_selected
+      mdc-list-item-meta-color: *l_text2
+
+      # --- Inputs / text fields / sélecteurs ---------------------------------
+      input-fill-color: *l_surface_input
+      input-disabled-fill-color: "rgba(255, 255, 255, 0.30)"
+      input-ink-color: *l_text
+      input-label-ink-color: *l_text2
+      input-disabled-ink-color: *l_text_disabled
+      input-idle-line-color: *l_border_strong
+      input-hover-line-color: *l_border_glow
+      input-disabled-line-color: "rgba(90, 40, 15, 0.08)"
+      input-outlined-idle-border-color: *l_border_strong
+      input-outlined-hover-border-color: *l_border_glow
+      input-outlined-disabled-border-color: "rgba(90, 40, 15, 0.08)"
+      input-dropdown-icon-color: *l_text2
+      mdc-text-field-fill-color: *l_surface_input
+      mdc-text-field-ink-color: *l_text
+      mdc-text-field-label-ink-color: *l_text2
+      mdc-text-field-idle-line-color: *l_border_strong
+      mdc-text-field-hover-line-color: *l_border_glow
+      mdc-text-field-disabled-fill-color: "rgba(255, 255, 255, 0.30)"
+      mdc-text-field-disabled-ink-color: *l_text_disabled
+      mdc-text-field-disabled-line-color: "rgba(90, 40, 15, 0.08)"
+      mdc-text-field-outlined-idle-border-color: *l_border_strong
+      mdc-text-field-outlined-hover-border-color: *l_border_glow
+      mdc-text-field-outlined-disabled-border-color: "rgba(90, 40, 15, 0.08)"
+      mdc-select-fill-color: *l_surface_input
+      mdc-select-ink-color: *l_text
+      mdc-select-label-ink-color: *l_text2
+      mdc-select-idle-line-color: *l_border_strong
+      mdc-select-hover-line-color: *l_border_glow
+      mdc-select-dropdown-icon-color: *l_text2
+      mdc-select-disabled-ink-color: *l_text_disabled
+      md-filled-text-field-container-color: *l_surface_input
+      md-filled-select-text-field-container-color: *l_surface_input
+      md-sys-color-surface-container-low: *l_surface_input
+      code-editor-background-color: "rgba(255, 255, 255, 0.72)"
+      codemirror-property: "#C2410C"
+      codemirror-keyword: "#9A3412"
+      codemirror-string: "#15803D"
+      codemirror-number: "#B45309"
+      codemirror-atom: "#BE185D"
+      codemirror-comment: "#9A8478"
+      markdown-code-background-color: "rgba(194, 65, 12, 0.07)"
+
+      # --- Switches / toggles ------------------------------------------------
+      switch-checked-color: "#C2410C"
+      switch-checked-button-color: "#FFFFFF"
+      switch-checked-track-color: "#E0560F"
+      switch-unchecked-color: "#9A8478"
+      switch-unchecked-button-color: "#FFFFFF"
+      switch-unchecked-track-color: "rgba(90, 40, 15, 0.22)"
+      switch-disabled-color: "#C2B1A6"
+      mdc-switch-handle-surface-color: "#FFFFFF"
+      mdc-checkbox-unchecked-color: *l_text2
+      mdc-checkbox-checked-color: "#C2410C"
+      mdc-checkbox-ink-color: "#FFFFFF"
+      mdc-checkbox-disabled-color: *l_text_disabled
+      mdc-radio-unchecked-color: *l_text2
+      mdc-radio-checked-color: "#C2410C"
+      mdc-radio-disabled-color: *l_text_disabled
+
+      # --- Sliders / progress bars / gauges ----------------------------------
+      slider-color: "#E0560F"
+      slider-secondary-color: "#C2410C"
+      slider-track-color: "rgba(90, 40, 15, 0.16)"
+      paper-slider-knob-color: "#E0560F"
+      paper-slider-active-color: "#E0560F"
+      paper-slider-secondary-color: "#C2410C"
+      paper-slider-container-color: "rgba(90, 40, 15, 0.16)"
+      md-slider-handle-color: "#E0560F"
+      md-slider-active-track-color: "#E0560F"
+      md-slider-inactive-track-color: "rgba(90, 40, 15, 0.16)"
+      ha-slider-thumb-color: "#FFFFFF"
+      ha-bar-primary-color: "#E0560F"
+      ha-bar-background-color: "rgba(90, 40, 15, 0.12)"
+      md-linear-progress-active-indicator-color: "#E0560F"
+      md-linear-progress-track-color: "rgba(90, 40, 15, 0.12)"
+      md-circular-progress-active-indicator-color: "#E0560F"
+      gauge-background-color: "rgba(90, 40, 15, 0.10)"
+      control-slider-background-opacity: "0.16"
+      control-select-background-opacity: "0.14"
+      control-button-background-opacity: "0.14"
+      control-switch-background-opacity: "0.16"
+
+      # --- Badges / chips / labels -------------------------------------------
+      label-badge-background-color: *l_surface_strong
+      label-badge-text-color: *l_text
+      ha-label-badge-color: *l_text
+      ha-assist-chip-filled-container-color: *l_surface_raised
+      md-assist-chip-outline-color: *l_border_strong
+      md-filter-chip-outline-color: *l_border_strong
+      md-filter-chip-selected-container-color: *l_surface_selected
+      md-input-chip-outline-color: *l_border_strong
+
+      # --- Tooltips ----------------------------------------------------------
+      ha-tooltip-background-color: "rgba(43, 26, 18, 0.94)"
+      ha-tooltip-text-color: "#FFF4EC"
+      paper-tooltip-background: "rgba(43, 26, 18, 0.94)"
+      paper-tooltip-text-color: "#FFF4EC"
+      paper-tooltip-opacity: "1"
+
+      # --- Tableaux / data tables --------------------------------------------
+      data-table-background-color: "transparent"
+      table-row-background-color: "transparent"
+      table-row-alternative-background-color: "rgba(194, 65, 12, 0.035)"
+      table-header-background-color: "rgba(255, 255, 255, 0.45)"
+
+      # --- Scrollbars / focus / divers ---------------------------------------
+      scrollbar-thumb-color: *l_scrollbar
+      md-focus-ring-color: "#C2410C"
+      ha-focus-ring-color: "#C2410C"
+      map-filter: "sepia(0.18) saturate(0.9)"
+
+      # --- Bubble Card -------------------------------------------------------
+      blue-glass-on-rgb: "224, 86, 15"
+      blue-glass-separator-rgb: "224, 86, 15"
+      bubble-line-background-color: "rgb(224, 86, 15)"
+      bubble-accent-color: "#E0560F"
+      bubble-main-background-color: "rgba(255, 255, 255, 0.52)"
+      bubble-secondary-background-color: "rgba(224, 86, 15, 0.08)"
+      bubble-button-main-background-color: "rgba(255, 255, 255, 0.52)"
+      bubble-button-icon-background-color: "rgba(224, 86, 15, 0.10)"
+      bubble-icon-background-color: "rgba(224, 86, 15, 0.10)"
+      bubble-media-player-main-background-color: "rgba(255, 255, 255, 0.52)"
+      bubble-select-main-background-color: "rgba(255, 255, 255, 0.52)"
+      bubble-select-list-background-color: *l_surface_solid
+      bubble-select-list-item-accent-color: "#C2410C"
+      bubble-pop-up-background-color: "rgba(252, 246, 240, 0.80)"
+      bubble-pop-up-main-background-color: "rgba(255, 255, 255, 0.52)"
+      bubble-backdrop-background-color: "rgba(43, 26, 18, 0.20)"
+      bubble-border: "1px solid rgba(255, 255, 255, 0.80)"
+      bubble-box-shadow: *l_shadow
+
+      # --- Mini Media Player -------------------------------------------------
+      mmp-accent-color: "#C2410C"
+      mmp-icon-active-color: "#E0560F"
+      mmp-text-color: *l_text
+      mmp-icon-color: "#9A5A3A"
+      mmp-media-cover-info-color: "#FFFFFF"
+      mmp-bg-opacity: "0.65"
+      mmp-overlay-base-color: "rgba(43, 26, 18, 0.45)"
+
+      # --- Mushroom ----------------------------------------------------------
+      mush-chip-background: "rgba(255, 255, 255, 0.56)"
+      mush-chip-box-shadow: *l_shadow
+      mush-rgb-disabled: "194, 177, 166"
+      mush-rgb-white: "255, 255, 255"
+      mush-rgb-black: "43, 26, 18"
+      mush-rgb-orange: "224, 86, 15"
+      mush-rgb-deep-orange: "194, 65, 12"
+      mush-rgb-state-fan: "224, 86, 15"
+      mush-rgb-state-light: "245, 158, 11"
+      mush-rgb-state-climate-cool: "14, 165, 233"
+      mush-rgb-success: "22, 163, 74"
+      mush-rgb-warning: "217, 119, 6"
+      mush-rgb-danger: "220, 38, 71"
+
+  # ===========================================================================
+  # 5. CARD-MOD — raffinements optionnels (nécessite card-mod ≥ 3.4)
+  #    Mêmes classes que Blue Glass : un tableau de bord passe d'un thème à
+  #    l'autre sans retouche.
+  #    ⚠ La valeur de card-mod-theme DOIT être identique au nom du thème.
+  # ===========================================================================
+  card-mod-theme: "Braise Glass"
+
+  # --- Cartes : hover, reflet, variantes par classe --------------------------
+  #   card_mod:
+  #     class: glass-accent   → verre incandescent (carte "héro")
+  #     class: glass-strong   → verre plus opaque (lisibilité max)
+  #     class: glass-clear    → verre très léger
+  #     class: glass-flat     → sans fond ni bordure (intégration dans une pile)
+  #     class: glass-glow     → bordure lumineuse orange
+  card-mod-card: |
+    ha-card {
+      transition: box-shadow var(--glass-transition), border-color var(--glass-transition), transform var(--glass-transition), background var(--glass-transition);
+    }
+    @media (hover: hover) {
+      ha-card:not(.glass-flat):hover {
+        box-shadow: var(--glass-shadow-hover);
+        border-color: var(--glass-border-strong);
+      }
+    }
+    ha-card.glass-accent {
+      --ha-card-background: var(--glass-accent-surface);
+      --ha-card-border-color: var(--glass-accent-border);
+      --primary-text-color: var(--glass-on-accent);
+      --secondary-text-color: var(--glass-on-accent-secondary);
+      --state-icon-color: var(--glass-on-accent);
+      --paper-item-icon-color: var(--glass-on-accent);
+      color: var(--glass-on-accent);
+    }
+    ha-card.glass-strong {
+      --ha-card-background: var(--glass-surface-strong);
+    }
+    ha-card.glass-clear {
+      --ha-card-background: var(--glass-surface-raised);
+      --ha-card-box-shadow: none;
+    }
+    ha-card.glass-flat {
+      --ha-card-background: transparent;
+      --ha-card-border-color: transparent;
+      --ha-card-box-shadow: none;
+      --ha-card-backdrop-filter: none;
+    }
+    ha-card.glass-glow {
+      --ha-card-border-color: var(--glass-border-glow);
+      --ha-card-box-shadow: var(--glass-shadow), var(--glass-glow);
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      ha-card {
+        --ha-card-background: var(--glass-surface-solid);
+        --ha-card-backdrop-filter: none;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      ha-card { transition: none; }
+    }
+
+  # --- Header Lovelace : verre flouté (secours) ------------------------------
+  card-mod-root: |
+    .header {
+      -webkit-backdrop-filter: var(--app-header-backdrop-filter);
+      backdrop-filter: var(--app-header-backdrop-filter);
+    }
+
+# =============================================================================
+#  BRAISE GLASS LITE — même design, sans flou (performances)
+#  Recommandé pour : tablettes murales anciennes, Fully Kiosk, Raspberry Pi,
+#  navigateurs sans GPU. Surfaces plus opaques pour rester lisibles.
+# =============================================================================
+Braise Glass Lite:
+  <<: *braise_glass
+  card-mod-theme: "Braise Glass Lite"
+  glass-blur: "none"
+  glass-blur-strong: "none"
+  glass-blur-soft: "none"
+  glass-blur-scrim: "none"
+  ha-card-backdrop-filter: "none"
+  app-header-backdrop-filter: "none"
+  ha-dialog-surface-backdrop-filter: "none"
+  ha-dialog-scrim-backdrop-filter: "none"
+  dialog-backdrop-filter: "none"
+  modes:
+    dark:
+      <<: *dark
+      glass-surface: &lite_d_surface "linear-gradient(160deg, rgba(48, 32, 26, 0.80) 0%, rgba(26, 18, 16, 0.86) 45%, rgba(20, 12, 10, 0.90) 100%)"
+      ha-card-background: *lite_d_surface
+      app-header-background-color: "rgba(10, 7, 6, 0.95)"
+      ha-dialog-surface-background: "rgba(22, 15, 13, 0.97)"
+      bubble-pop-up-background-color: "rgba(16, 11, 10, 0.96)"
+      bubble-main-background-color: "rgba(30, 21, 18, 0.80)"
+    light:
+      <<: *light
+      glass-surface: &lite_l_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 249, 244, 0.86) 50%, rgba(255, 232, 214, 0.80) 100%)"
+      ha-card-background: *lite_l_surface
+      app-header-background-color: "rgba(252, 246, 240, 0.96)"
+      ha-dialog-surface-background: "rgba(255, 250, 246, 0.98)"
+      bubble-pop-up-background-color: "rgba(252, 246, 240, 0.97)"
+      bubble-main-background-color: "rgba(255, 255, 255, 0.86)"
