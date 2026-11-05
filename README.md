@@ -10,10 +10,6 @@ orange edges and embers rising over a perspective floor. It comes with a dark mo
 a light mode named **Cendre** (ash), and a **Lite** variant without blur for slow
 wall tablets.
 
-> 🇫🇷 Thème **verre & braise** pour Home Assistant : verre noir fumé, bords orange
-> incandescents, braises qui montent. Modes sombre et clair (« Cendre »), plus une
-> variante **Lite** sans flou pour les tablettes lentes. Le reste de ce README est en anglais.
-
 | Dark | Light (Cendre) |
 |---|---|
 | ![Braise Glass — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_dark.png) | ![Braise Glass — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_light.png) |
@@ -35,25 +31,87 @@ wall tablets.
 
 ## Installation
 
-### HACS (recommended)
+The theme is a single, self-contained YAML file: the backdrops are embedded as SVG
+data URIs, so there is nothing to copy into `/config/www` and no `/local/` resource
+to declare.
 
-1. In HACS, open **⋮ → Custom repositories**.
-2. Add `https://github.com/domodom30/ha-braise-glass-theme` with the type **Theme**.
-3. Search for **Braise Glass**, then click **Download**.
-4. Make sure `configuration.yaml` loads the themes folder (see below), then restart Home Assistant or run the `frontend.reload_themes` action.
+### Requirements
 
-[![Open your Home Assistant instance and open a repository inside HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=domodom30&repository=ha-braise-glass-theme&category=theme)
+- Home Assistant **2024.8.0** or later.
+- [HACS](https://hacs.xyz/docs/use/) for the automatic installation.
+- [card-mod](https://github.com/thomasloven/lovelace-card-mod) 3.4+ is **optional** (only for the extras listed above).
 
-### Manual
+### Step 1 — Enable the themes folder
 
-Copy `themes/braise_glass.yaml` to `/config/themes/braise_glass/`, then reload the themes.
-
-### `configuration.yaml`
+Home Assistant only loads themes from a folder declared in `configuration.yaml`.
+If your configuration does not already contain it, add:
 
 ```yaml
 frontend:
   themes: !include_dir_merge_named themes
 ```
+
+Then check the configuration (**Developer tools → YAML → Check configuration**) and
+**restart** Home Assistant. This restart is needed only once; afterwards, new or
+updated themes are picked up with a simple reload.
+
+> If you already have `frontend: themes: !include_dir_merge_named themes`, skip this step.
+> Do not declare `frontend:` twice.
+
+### Step 2 — Automatic installation with HACS (recommended)
+
+**One-click**: if [My Home Assistant](https://my.home-assistant.io/) is set up, click the
+button below. It opens HACS on this repository and adds it as a custom repository for you.
+
+[![Open your Home Assistant instance and open a repository inside HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=domodom30&repository=ha-braise-glass-theme&category=theme)
+
+**Or step by step**:
+
+1. In Home Assistant, open **HACS**.
+2. Click **⋮** (top right) → **Custom repositories**.
+3. Fill in the dialog:
+   - **Repository**: `https://github.com/domodom30/ha-braise-glass-theme`
+   - **Type**: **Theme**
+4. Click **Add**, then close the dialog.
+5. Search for **Braise Glass** in HACS and open it.
+6. Click **Download** (bottom right), choose the latest version and confirm.
+   HACS writes the file to `/config/themes/braise_glass/braise_glass.yaml`.
+7. Reload the themes: **Developer tools → Actions**, run `frontend.reload_themes`
+   (no restart needed, unless you just did Step 1).
+
+```yaml
+action: frontend.reload_themes
+```
+
+8. Select the theme (see [Usage](#usage)).
+
+#### Updates
+
+HACS checks the repository for new releases. When one is available, an update entity
+appears in **Settings → Updates** (and in HACS). Install it, then run
+`frontend.reload_themes` again and refresh the browser. Your theme selection is kept.
+
+#### Uninstall
+
+In HACS, open **Braise Glass → ⋮ → Remove**, then run `frontend.reload_themes`.
+Users who had selected it fall back to the default theme.
+
+### Alternative — Manual installation
+
+1. Download `themes/braise_glass.yaml` from the [latest release](https://github.com/domodom30/ha-braise-glass-theme/releases/latest).
+2. Copy it to `/config/themes/braise_glass/braise_glass.yaml` (Samba, File editor, Studio Code Server…).
+3. Make sure Step 1 is done, then run `frontend.reload_themes`.
+
+Manual installs are not updated automatically: repeat these steps for each new release.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| **Braise Glass** is missing from the theme list | Check that Step 1 is in `configuration.yaml`, that Home Assistant was restarted after adding it, and that the file is in `/config/themes/…`. Then run `frontend.reload_themes`. |
+| The theme loads but looks unchanged after an update | Clear the browser cache or force a reload (Ctrl + F5). In the companion app: **Settings → Companion app → Troubleshooting → Reset frontend cache**. |
+| Scrolling is slow on a wall tablet | Use **Braise Glass Lite**, which has the same design without blur. |
+| The repository cannot be added in HACS | Make sure the type is **Theme** and that the URL has no trailing `.git` or `/`. |
 
 ## Usage
 
