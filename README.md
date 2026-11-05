@@ -41,24 +41,7 @@ to declare.
 - [HACS](https://hacs.xyz/docs/use/) for the automatic installation.
 - [card-mod](https://github.com/thomasloven/lovelace-card-mod) 3.4+ is **optional** (only for the extras listed above).
 
-### Step 1 — Enable the themes folder
-
-Home Assistant only loads themes from a folder declared in `configuration.yaml`.
-If your configuration does not already contain it, add:
-
-```yaml
-frontend:
-  themes: !include_dir_merge_named themes
-```
-
-Then check the configuration (**Developer tools → YAML → Check configuration**) and
-**restart** Home Assistant. This restart is needed only once; afterwards, new or
-updated themes are picked up with a simple reload.
-
-> If you already have `frontend: themes: !include_dir_merge_named themes`, skip this step.
-> Do not declare `frontend:` twice.
-
-### Step 2 — Automatic installation with HACS (recommended)
+### Step 1 — Automatic installation with HACS (recommended)
 
 **One-click**: if [My Home Assistant](https://my.home-assistant.io/) is set up, click the
 button below. It opens HACS on this repository and adds it as a custom repository for you.
@@ -84,6 +67,23 @@ action: frontend.reload_themes
 ```
 
 8. Select the theme (see [Usage](#usage)).
+
+### Step 2 — Enable the themes folder
+
+Home Assistant only loads themes from a folder declared in `configuration.yaml`.
+If your configuration does not already contain it, add:
+
+```yaml
+frontend:
+  themes: !include_dir_merge_named themes
+```
+
+Then check the configuration (**Developer tools → YAML → Check configuration**) and
+**restart** Home Assistant. This restart is needed only once; afterwards, new or
+updated themes are picked up with a simple reload.
+
+> If you already have `frontend: themes: !include_dir_merge_named themes`, skip this step.
+> Do not declare `frontend:` twice.
 
 #### Updates
 
