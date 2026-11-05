@@ -1,4 +1,4 @@
-"""Génère les aperçus du README (assets/preview_dark.png, assets/preview_light.png).
+"""Génère les aperçus du README (assets/preview[_variante]_{dark,light}.png).
 
 Usage : python tools/preview.py [chemin/vers/chrome]
 
@@ -19,6 +19,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+# Thème → préfixe des captures
+THEMES = {"Braise Glass": "preview", "Braise Glass Amethyst": "preview_amethyst"}
 
 TILES = [
     ("mdi-lightbulb", "Salon", "Allumée · 80 %", "light"),
@@ -69,9 +71,8 @@ main {{ padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap
 </main></body></html>"""
 
 
-def theme_vars(mode: str) -> str:
-    themes = yaml.safe_load((ROOT / "themes" / "braise_glass.yaml").read_text(encoding="utf-8"))
-    t = themes["Braise Glass"]
+def theme_vars(themes: dict, name: str, mode: str) -> str:
+    t = themes[name]
     v = {k: x for k, x in t.items() if k != "modes" and isinstance(x, str) and not k.startswith("card-mod")}
     v.update(t["modes"][mode])
     return html.escape(";".join(f"--{k}:{x}" for k, x in v.items()))
@@ -88,11 +89,13 @@ def tiles() -> str:
 
 
 def main(chrome: str) -> None:
+    themes = yaml.safe_load((ROOT / "themes" / "braise_glass.yaml").read_text(encoding="utf-8"))
+    jobs = [(name, prefix, mode) for name, prefix in THEMES.items() for mode in ("dark", "light")]
     with tempfile.TemporaryDirectory() as tmp:
-        for mode in ("dark", "light"):
-            page = Path(tmp) / f"{mode}.html"
-            page.write_text(PAGE.format(vars=theme_vars(mode), tiles=tiles()), encoding="utf-8")
-            out = ROOT / "assets" / f"preview_{mode}.png"
+        for name, prefix, mode in jobs:
+            page = Path(tmp) / f"{prefix}_{mode}.html"
+            page.write_text(PAGE.format(vars=theme_vars(themes, name, mode), tiles=tiles()), encoding="utf-8")
+            out = ROOT / "assets" / f"{prefix}_{mode}.png"
             subprocess.run([chrome, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,640",
                             "--virtual-time-budget=4000", f"--screenshot={out}", page.as_uri()],
                            check=True, capture_output=True)

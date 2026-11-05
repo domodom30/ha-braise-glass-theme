@@ -27,6 +27,16 @@ KEY_RE = re.compile(r"^[a-zA-Z0-9_-]+$")
 HEX_RE = re.compile(r"^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
 VAR_RE = re.compile(r"var\(--([a-zA-Z0-9_-]+)")
 MODES = {"light", "dark"}
+STATE_COLORS = (
+    "success-color", "warning-color", "error-color", "info-color",
+    "state-active-color", "state-light-active-color", "state-climate-heat-color",
+    "state-climate-cool-color", "state-sun-above_horizon-color",
+    "blue-color", "light-blue-color", "cyan-color", "teal-color", "green-color",
+    "light-green-color", "lime-color", "yellow-color", "amber-color", "orange-color",
+    "deep-orange-color", "red-color", "pink-color", "purple-color", "deep-purple-color",
+    "indigo-color", "brown-color", "grey-color", "blue-grey-color",
+    *(f"graph-color-{i}" for i in range(1, 13)),
+)
 
 errors: list[str] = []
 warnings: list[str] = []
@@ -118,6 +128,9 @@ def main(path: Path) -> int:
                 ("secondary-text / primary-bg", text2, bg, 4.5),
                 ("primary-color / primary-bg", primary, bg, 3.0),
             ]
+            # Couleurs d'état / nommées : icônes et textes d'état (WCAG 1.4.11, 3:1)
+            for key in STATE_COLORS:
+                pairs.append((key, effective.get(key), bg, 3.0))
             for label, fg, bgc, minimum in pairs:
                 if fg and bgc and HEX_RE.match(fg) and HEX_RE.match(bgc):
                     ratio = contrast(fg, bgc)
