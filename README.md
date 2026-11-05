@@ -60,13 +60,24 @@ button below. It opens HACS on this repository and adds it as a custom repositor
 6. Click **Download** (bottom right), choose the latest version and confirm.
    HACS writes the file to `/config/themes/braise_glass/braise_glass.yaml`.
 7. Reload the themes: **Developer tools → Actions**, run `frontend.reload_themes`
-   (no restart needed, unless you just did Step 1).
+   (no restart needed if the themes folder is already enabled; otherwise, do Step 2 first).
 
 ```yaml
 action: frontend.reload_themes
 ```
 
 8. Select the theme (see [Usage](#usage)).
+
+#### Updates
+
+HACS checks the repository for new releases. When one is available, an update entity
+appears in **Settings → Updates** (and in HACS). Install it, then run
+`frontend.reload_themes` again and refresh the browser. Your theme selection is kept.
+
+#### Uninstall
+
+In HACS, open **Braise Glass → ⋮ → Remove**, then run `frontend.reload_themes`.
+Users who had selected it fall back to the default theme.
 
 ### Step 2 — Enable the themes folder
 
@@ -85,22 +96,11 @@ updated themes are picked up with a simple reload.
 > If you already have `frontend: themes: !include_dir_merge_named themes`, skip this step.
 > Do not declare `frontend:` twice.
 
-#### Updates
-
-HACS checks the repository for new releases. When one is available, an update entity
-appears in **Settings → Updates** (and in HACS). Install it, then run
-`frontend.reload_themes` again and refresh the browser. Your theme selection is kept.
-
-#### Uninstall
-
-In HACS, open **Braise Glass → ⋮ → Remove**, then run `frontend.reload_themes`.
-Users who had selected it fall back to the default theme.
-
 ### Alternative — Manual installation
 
 1. Download `themes/braise_glass.yaml` from the [latest release](https://github.com/domodom30/ha-braise-glass-theme/releases/latest).
 2. Copy it to `/config/themes/braise_glass/braise_glass.yaml` (Samba, File editor, Studio Code Server…).
-3. Make sure Step 1 is done, then run `frontend.reload_themes`.
+3. Make sure Step 2 is done, then run `frontend.reload_themes`.
 
 Manual installs are not updated automatically: repeat these steps for each new release.
 
@@ -108,7 +108,7 @@ Manual installs are not updated automatically: repeat these steps for each new r
 
 | Symptom | Fix |
 |---|---|
-| **Braise Glass** is missing from the theme list | Check that Step 1 is in `configuration.yaml`, that Home Assistant was restarted after adding it, and that the file is in `/config/themes/…`. Then run `frontend.reload_themes`. |
+| **Braise Glass** is missing from the theme list | Check that Step 2 is in `configuration.yaml`, that Home Assistant was restarted after adding it, and that the file is in `/config/themes/…`. Then run `frontend.reload_themes`. |
 | The theme loads but looks unchanged after an update | Clear the browser cache or force a reload (Ctrl + F5). In the companion app: **Settings → Companion app → Troubleshooting → Reset frontend cache**. |
 | Scrolling is slow on a wall tablet | Use **Braise Glass Lite**, which has the same design without blur. |
 | The repository cannot be added in HACS | Make sure the type is **Theme** and that the URL has no trailing `.git` or `/`. |
