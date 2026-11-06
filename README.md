@@ -11,6 +11,12 @@ orange edges and embers rising over a perspective floor. It comes with a dark mo
 a light mode named **Cendre** (ash), and a **Lite** variant without blur for slow
 wall tablets. The same design is available in **five colourways**.
 
+<p align="center">
+  <img src="assets/braise-demo.gif" width="800" alt="Braise Glass: dark, Cendre light and the Amethyst, Lagoon, Sapphire and Fuchsia colourways">
+</p>
+
+⭐ **Like the theme? A star on the repository helps other users find it.**
+
 | Dark | Light (Cendre) |
 |---|---|
 | ![Braise Glass — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png) | ![Braise Glass — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png) |
