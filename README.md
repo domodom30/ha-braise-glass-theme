@@ -8,53 +8,31 @@
 An **ember glassmorphism** theme for Home Assistant: smoked black glass, glowing
 orange edges and embers rising over a perspective floor. It comes with a dark mode,
 a light mode named **Cendre** (ash), and a **Lite** variant without blur for slow
-wall tablets. An **Amethyst** (purple) colourway of the same design is included.
+wall tablets. The same design is available in **five colourways**.
 
 | Dark | Light (Cendre) |
 |---|---|
-| ![Braise Glass — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_dark.png) | ![Braise Glass — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_light.png) |
-| ![Braise Glass Amethyst — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_amethyst_dark.png) | ![Braise Glass Amethyst — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/preview_amethyst_light.png) |
+| ![Braise Glass — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png) | ![Braise Glass — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png) |
 
-## Screenshots
+### Colourways
 
-### Braise Glass
+Click a colour to preview it.
 
-**Dashboard**
-
-![Braise Glass — Dashboard](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_braise_dashboard.png)
-
-**Water heater view**
-
-![Braise Glass — Water heater view](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_braise_chauffe_eau.png)
-
-**Bluetooth Audio Manager app**
-
-![Braise Glass — Bluetooth Audio Manager app](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_braise_bt_audio.png)
-
-### Braise Glass Amethyst
-
-**Dashboard**
-
-![Braise Glass Amethyst — Dashboard](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_amethyst_dashboard.png)
-
-**Water heater view**
-
-![Braise Glass Amethyst — Water heater view](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_amethyst_chauffe_eau.png)
-
-**Bluetooth Audio Manager app**
-
-![Braise Glass Amethyst — Bluetooth Audio Manager app](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/screenshot_amethyst_bt_audio.png)
+| Mode | Colourways |
+|---|---|
+| Dark | [![Braise](https://img.shields.io/badge/Braise-FF6A1F?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png) [![Amethyst](https://img.shields.io/badge/Amethyst-B274FC?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_dark.png) [![Lagoon](https://img.shields.io/badge/Lagoon-00B6B3?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_dark.png) [![Sapphire](https://img.shields.io/badge/Sapphire-2C86FE?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_dark.png) [![Fuchsia](https://img.shields.io/badge/Fuchsia-F261B5?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_dark.png) |
+| Light | [![Braise](https://img.shields.io/badge/Braise-FF6A1F?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png) [![Amethyst](https://img.shields.io/badge/Amethyst-B274FC?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_light.png) [![Lagoon](https://img.shields.io/badge/Lagoon-00B6B3?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_light.png) [![Sapphire](https://img.shields.io/badge/Sapphire-2C86FE?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_light.png) [![Fuchsia](https://img.shields.io/badge/Fuchsia-F261B5?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_light.png) |
 
 ## Features
 
-- **Four themes in one file**:
+- **Ten themes in one file**:
   - **Braise Glass**: dark and light modes, with frosted cards (`backdrop-filter`).
   - **Braise Glass Lite**: the same design without blur. The surfaces are more opaque, so the theme stays fast on old tablets, Fully Kiosk or a Raspberry Pi.
-  - **Braise Glass Amethyst** and **Braise Glass Amethyst Lite**: the same two themes in purple. Backdrop, glows, glass tints and neutrals all turn purple; success, warning, error, info and named colours (`orange`, `amber`…) are left unchanged.
+  - **Colourways**: **Amethyst** (purple), **Lagoon** (teal), **Sapphire** (blue) and **Fuchsia** (pink), each with its **Lite** version. Backdrop, glows, glass tints and neutrals all follow the colourway; success, warning, error, info and named colours (`orange`, `amber`…) are left unchanged.
 - **Built-in backdrop**: the ember scene (glow, perspective floor, glowing ring, embers) is embedded in the theme as an SVG. Nothing goes into `/config/www`, and there are no extra files to download.
 - **Specular edges**: each card has a white highlight on top and an ember line at the bottom.
 - **Readable**: WCAG contrast is checked in CI. Primary text reaches 18:1 in dark mode and 15:1 in light mode, and every state, named and chart colour reaches at least 3:1 on the background in both modes. Success, warning, error and info colours are kept away from the brand orange, so an alert never looks like an "on" state.
-- **Complete coverage**: cards, header, sidebar, dialogs, inputs, switches, sliders, charts, energy colours, per-domain state colours and the map.
+- **Complete coverage**: cards, header, sidebar, dialogs, inputs, switches, sliders, charts, energy colours, per-domain state colours and the map. The newer Home Assistant components (switches, dropdowns, menus) follow the theme too, through the `--ha-color-*` palettes and `--ha-switch-*` variables.
 - **Custom cards**: Mushroom, Bubble Card and mini-media-player tokens.
 - **Optional card-mod extras**:
   - A hover glow on cards.
@@ -147,7 +125,7 @@ Manual installs are not updated automatically: repeat these steps for each new r
 
 ## Usage
 
-- **For yourself**: open **Profile → Theme**, then choose **Braise Glass**, **Braise Glass Amethyst** or one of their **Lite** versions. Leave the mode on *Auto* to follow the device, or force dark or light.
+- **For yourself**: open **Profile → Theme**, then choose **Braise Glass**, one of its colourways (**Amethyst**, **Lagoon**, **Sapphire**, **Fuchsia**) or one of their **Lite** versions. Leave the mode on *Auto* to follow the device, or force dark or light.
 - **As the default for everyone**:
 
 ```yaml
@@ -183,8 +161,14 @@ the active theme colour, so the same modules work across themes.
 | Lights on | `#FFC27A` | `#C47F00` |
 | Success / warning / error / info | `#3DDC97` / `#FFD166` / `#FF4D6A` / `#5AC8FA` | `#15803D` / `#B45309` / `#DC2647` / `#0284C7` |
 
-**Amethyst** keeps the same structure and contrast ratios. Primary / accent are
-`#B274FC` / `#C880FD` in dark mode and `#8155C9` / `#9E67E5` in light mode.
+The colourways keep the same structure and contrast ratios:
+
+| Colourway | Primary / accent (dark) | Primary / accent (light) |
+|---|---|---|
+| Amethyst | `#B274FC` / `#C880FD` | `#8155C9` / `#9E67E5` |
+| Lagoon | `#00B6B3` / `#00BDC3` | `#00847D` / `#009D99` |
+| Sapphire | `#2C86FE` / `#5186FD` | `#0072D3` / `#2E86F6` |
+| Fuchsia | `#F261B5` / `#FB6CAE` | `#B33E8C` / `#D34F9F` |
 
 ## Development
 
@@ -195,7 +179,7 @@ the active theme colour, so the same modules work across themes.
 | `themes/braise_glass.yaml` | Distributed theme, generated by `tools/build_theme.py`. Do not edit it by hand. |
 | `tools/recolor.py` | Hue rotation (OKLCH, perceived lightness kept) that produces the colour variants. Variants are declared in `VARIANTS` in `tools/build_theme.py`. |
 | `tools/validate_theme.py` | Checks the schema, the `var(--glass-*)` references and the WCAG contrasts |
-| `tools/preview.py` | Regenerates the README screenshots (headless Chrome) |
+| `tools/preview.py` | Quick synthetic preview of each colourway (headless Chrome, `assets/preview_*.png`, not tracked). The README screenshots are taken from a real Home Assistant dashboard. |
 
 ```bash
 pip install pyyaml

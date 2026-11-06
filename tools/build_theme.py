@@ -31,6 +31,9 @@ BACKDROPS = (("{{BACKDROP_DARK}}", "braise_glass_dark.svg"), ("{{BACKDROP_LIGHT}
 # rotation de teinte OKLCH (degrés) appliquée aux couleurs de marque.
 VARIANTS = [
     {"name": "Braise Glass Amethyst", "anchor": "amethyst", "hue": 260},
+    {"name": "Braise Glass Lagoon", "anchor": "lagoon", "hue": 150},
+    {"name": "Braise Glass Sapphire", "anchor": "sapphire", "hue": 215},
+    {"name": "Braise Glass Fuchsia", "anchor": "fuchsia", "hue": 305},
 ]
 
 ANCHOR_RE = re.compile(r"(?<=\s)([&*])([a-z][a-z0-9_]*)")

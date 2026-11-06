@@ -1,6 +1,6 @@
 # =============================================================================
 #  BRAISE GLASS — Ember Glassmorphism theme for Home Assistant
-#  Version : 1.1.0
+#  Version : 1.2.0
 #  Inspiration : thème « Braise » (Ember) de Domo TV — verre noir fumé,
 #                bords orange incandescents, braises qui montent
 #
@@ -120,6 +120,42 @@ Braise Glass: &braise_glass
   md-filled-select-text-field-container-shape: *radius_sm
   md-outlined-select-text-field-container-shape: *radius_sm
 
+  # --- Design system HA (--ha-color-*) ---------------------------------------
+  # Les composants récents (ha-switch, ha-select, menus, boutons…) dérivent
+  # leurs couleurs de ces gammes ; HA les définit en bleu et en gris neutre.
+  # Mêmes luminosités que les gammes d'origine, teinte braise / cendre chaude.
+  ha-color-primary-05: "#280900"
+  ha-color-primary-10: "#491700"
+  ha-color-primary-20: "#652200"
+  ha-color-primary-30: "#9C3900"
+  ha-color-primary-40: "#E0560F"
+  ha-color-primary-50: "#FF8551"
+  ha-color-primary-60: "#FF9970"
+  ha-color-primary-70: "#FFB193"
+  ha-color-primary-80: "#FFD3C2"
+  ha-color-primary-90: "#FFEAE2"
+  ha-color-primary-95: "#FFF5F1"
+  ha-color-neutral-05: "#19120E"
+  ha-color-neutral-10: "#261E1A"
+  ha-color-neutral-20: "#3C3430"
+  ha-color-neutral-30: "#514843"
+  ha-color-neutral-40: "#655C57"
+  ha-color-neutral-50: "#817873"
+  ha-color-neutral-60: "#A09690"
+  ha-color-neutral-70: "#B9AFA9"
+  ha-color-neutral-80: "#D4CAC4"
+  ha-color-neutral-90: "#EEE4DE"
+  ha-color-neutral-95: "#FBF1EB"
+  # Nouveau ha-switch (Web Awesome) : mêmes couleurs que les switch-* du thème
+  ha-switch-checked-background-color: "var(--switch-checked-track-color)"
+  ha-switch-checked-border-color: "var(--switch-checked-track-color)"
+  ha-switch-checked-thumb-background-color: "var(--switch-checked-button-color)"
+  ha-switch-checked-thumb-border-color: "var(--switch-checked-button-color)"
+  ha-switch-background-color: "var(--switch-unchecked-track-color)"
+  ha-switch-border-color: "var(--switch-unchecked-track-color)"
+  ha-switch-thumb-background-color: "var(--switch-unchecked-button-color)"
+  ha-switch-thumb-border-color: "var(--switch-unchecked-button-color)"
+
   # --- Flou appliqué aux composants HA ----------------------------------------
   ha-card-backdrop-filter: *blur
   app-header-backdrop-filter: *blur_strong
@@ -139,8 +175,8 @@ Braise Glass: &braise_glass
   lime-color: "#C6E86B"
   yellow-color: "#FFE07A"
   amber-color: *warning
-  orange-color: *flame
-  deep-orange-color: *ember
+  orange-color: "#FF7A1A"        # littéral : couleur nommée, jamais recolorée
+  deep-orange-color: "#FF6A1F"   # littéral : couleur nommée, jamais recolorée
   red-color: *error
   pink-color: *magenta
   purple-color: "#C084FC"
@@ -191,7 +227,7 @@ Braise Glass: &braise_glass
   state-fan-active-color: *flame
   state-automation-active-color: *flame
   state-script-active-color: *flame
-  state-media_player-active-color: *violet
+  state-media_player-active-color: *flame
   state-cover-active-color: *flame
   state-vacuum-active-color: "#2CC9B4"
   state-humidifier-active-color: *info
@@ -211,7 +247,7 @@ Braise Glass: &braise_glass
   state-climate-heat_cool-color: *gold
   state-climate-dry-color: *warning
   state-climate-fan_only-color: "#2CC9B4"
-  state-lock-locked-color: *success
+  state-lock-locked-color: *flame
   state-lock-unlocked-color: *error
   state-lock-jammed-color: *error
   state-lock-locking-color: *warning
@@ -309,14 +345,14 @@ Braise Glass: &braise_glass
   mush-rgb-state-light: "255, 194, 122"
   mush-rgb-state-fan: "255, 122, 26"
   mush-rgb-state-cover: "255, 138, 61"
-  mush-rgb-state-media-player: "167, 139, 250"
+  mush-rgb-state-media-player: "255, 122, 26"
   mush-rgb-state-climate-heat: "255, 106, 31"
   mush-rgb-state-climate-cool: "90, 200, 250"
   mush-rgb-state-climate-auto: "61, 220, 151"
   mush-rgb-state-climate-dry: "255, 209, 102"
   mush-rgb-state-climate-fan-only: "44, 201, 180"
   mush-rgb-state-climate-heat-cool: "255, 194, 122"
-  mush-rgb-state-lock-locked: "61, 220, 151"
+  mush-rgb-state-lock-locked: "255, 122, 26"
   mush-rgb-state-lock-unlocked: "255, 77, 106"
   mush-rgb-state-lock-pending: "255, 209, 102"
   mush-rgb-state-alarm-disarmed: "255, 138, 61"
@@ -363,6 +399,7 @@ Braise Glass: &braise_glass
     dark: &dark
       # --- Surfaces de verre (tokens) ----------------------------------------
       glass-surface: &d_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.07) 0%, rgba(26, 18, 16, 0.42) 42%, rgba(20, 12, 10, 0.56) 100%)"
+      glass-surface-flat: &d_surface_flat "rgba(24, 16, 14, 0.46)"
       glass-surface-solid: &d_surface_solid "rgba(26, 18, 16, 0.95)"
       glass-surface-strong: &d_surface_strong "rgba(22, 15, 13, 0.80)"
       glass-surface-raised: &d_surface_raised "rgba(255, 122, 26, 0.08)"
@@ -416,7 +453,15 @@ Braise Glass: &braise_glass
       outline-hover-color: *d_border_strong
 
       # --- Cartes ------------------------------------------------------------
-      ha-card-background: *d_surface
+      # ha-card-background doit rester une COULEUR : HA la réutilise comme
+      # contour des libellés ECharts (graphes réseau, sankey, camemberts) et
+      # un canvas ne sait pas dessiner un dégradé → texte baveux. Le dégradé
+      # glass-surface est réappliqué aux cartes via card-mod-card.
+      ha-card-background: *d_surface_flat
+      # Arc de luminosité de la carte lumière (ha-control-circular-slider) :
+      # dégradé SVG du braise profond vers l'or, révélé au fil de la valeur.
+      # Couleurs en rgb() pour que tools/recolor.py les décline par palette.
+      glass-light-slider-stroke: "url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><linearGradient id='g' x1='1' y1='1' x2='0' y2='0'><stop offset='0.15' stop-color='rgb(194, 65, 12)'/><stop offset='0.5' stop-color='rgb(255, 106, 31)'/><stop offset='0.85' stop-color='rgb(255, 194, 122)'/></linearGradient></svg>#g\") var(--primary-color)"
       ha-card-border-color: *d_border
       ha-card-box-shadow: *d_shadow
       ha-card-header-color: *d_text
@@ -502,6 +547,9 @@ Braise Glass: &braise_glass
 
       # --- Inputs / text fields / sélecteurs ---------------------------------
       input-fill-color: *d_surface_input
+      ha-color-form-background: *d_surface_input
+      ha-color-form-background-hover: *d_surface_input_hover
+      ha-color-form-background-disabled: "rgba(10, 7, 6, 0.25)"
       input-disabled-fill-color: "rgba(10, 7, 6, 0.25)"
       input-ink-color: *d_text
       input-label-ink-color: *d_text2
@@ -652,6 +700,7 @@ Braise Glass: &braise_glass
     light: &light
       # --- Surfaces de verre (tokens) ----------------------------------------
       glass-surface: &l_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 248, 242, 0.54) 50%, rgba(255, 214, 184, 0.34) 100%)"
+      glass-surface-flat: &l_surface_flat "rgba(255, 246, 238, 0.56)"
       glass-surface-solid: &l_surface_solid "rgba(255, 250, 246, 0.97)"
       glass-surface-strong: &l_surface_strong "rgba(255, 255, 255, 0.80)"
       glass-surface-raised: &l_surface_raised "rgba(224, 86, 15, 0.07)"
@@ -704,7 +753,15 @@ Braise Glass: &braise_glass
       outline-hover-color: *l_border_glow
 
       # --- Cartes ------------------------------------------------------------
-      ha-card-background: *l_surface
+      # ha-card-background doit rester une COULEUR : HA la réutilise comme
+      # contour des libellés ECharts (graphes réseau, sankey, camemberts) et
+      # un canvas ne sait pas dessiner un dégradé → texte baveux. Le dégradé
+      # glass-surface est réappliqué aux cartes via card-mod-card.
+      ha-card-background: *l_surface_flat
+      # Arc de luminosité de la carte lumière (ha-control-circular-slider) :
+      # dégradé SVG du braise profond vers l'or, révélé au fil de la valeur.
+      # Couleurs en rgb() pour que tools/recolor.py les décline par palette.
+      glass-light-slider-stroke: "url(\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><linearGradient id='g' x1='1' y1='1' x2='0' y2='0'><stop offset='0.15' stop-color='rgb(156, 57, 0)'/><stop offset='0.5' stop-color='rgb(224, 86, 15)'/><stop offset='0.85' stop-color='rgb(232, 150, 40)'/></linearGradient></svg>#g\") var(--primary-color)"
       ha-card-border-color: *l_border
       ha-card-box-shadow: *l_shadow
       ha-card-header-color: *l_text
@@ -743,7 +800,7 @@ Braise Glass: &braise_glass
       state-sensor-battery-high-color: "#15803D"
       state-sensor-battery-medium-color: "#B45309"
       state-sensor-battery-low-color: "#DC2647"
-      state-lock-locked-color: "#15803D"
+      state-lock-locked-color: "#E0560F"
       state-lock-unlocked-color: "#DC2647"
       state-lock-jammed-color: "#DC2647"
       state-lock-open-color: "#DC2647"
@@ -774,7 +831,7 @@ Braise Glass: &braise_glass
       label-badge-green: "#15803D"
       label-badge-yellow: "#B45309"
       label-badge-grey: "#78716C"
-      state-media_player-active-color: "#7C3AED"
+      state-media_player-active-color: "#E0560F"
       state-vacuum-active-color: "#0D9488"
       state-siren-active-color: "#DC2647"
       state-update-active-color: "#B45309"
@@ -896,6 +953,9 @@ Braise Glass: &braise_glass
 
       # --- Inputs / text fields / sélecteurs ---------------------------------
       input-fill-color: *l_surface_input
+      ha-color-form-background: *l_surface_input
+      ha-color-form-background-hover: *l_surface_input_hover
+      ha-color-form-background-disabled: "rgba(255, 255, 255, 0.30)"
       input-disabled-fill-color: "rgba(255, 255, 255, 0.30)"
       input-ink-color: *l_text
       input-label-ink-color: *l_text2
@@ -1068,13 +1128,13 @@ Braise Glass: &braise_glass
       mush-rgb-grey: "120, 113, 108"
       mush-rgb-blue-grey: "100, 116, 139"
       mush-rgb-state-cover: "224, 86, 15"
-      mush-rgb-state-media-player: "124, 58, 237"
+      mush-rgb-state-media-player: "224, 86, 15"
       mush-rgb-state-climate-heat: "224, 86, 15"
       mush-rgb-state-climate-auto: "21, 128, 61"
       mush-rgb-state-climate-dry: "180, 83, 9"
       mush-rgb-state-climate-fan-only: "13, 148, 136"
       mush-rgb-state-climate-heat-cool: "180, 83, 9"
-      mush-rgb-state-lock-locked: "21, 128, 61"
+      mush-rgb-state-lock-locked: "224, 86, 15"
       mush-rgb-state-lock-unlocked: "220, 38, 71"
       mush-rgb-state-lock-pending: "180, 83, 9"
       mush-rgb-state-alarm-disarmed: "224, 86, 15"
@@ -1102,6 +1162,7 @@ Braise Glass: &braise_glass
   #     class: glass-glow     → bordure lumineuse orange
   card-mod-card: |
     ha-card {
+      --ha-card-background: var(--glass-surface);
       transition: box-shadow var(--glass-transition), border-color var(--glass-transition), transform var(--glass-transition), background var(--glass-transition);
     }
     @media (hover: hover) {
@@ -1118,6 +1179,25 @@ Braise Glass: &braise_glass
       --state-icon-color: var(--glass-on-accent);
       --paper-item-icon-color: var(--glass-on-accent);
       color: var(--glass-on-accent);
+    }
+    /* Les graphiques HA lisent --ha-card-background comme couleur de contour
+       des libellés : on rend aux enfants une couleur unie (pas de dégradé). */
+    ha-card > * {
+      --ha-card-background: var(--glass-surface-flat);
+    }
+    ha-card.glass-accent > * {
+      --ha-card-background: var(--primary-color);
+    }
+    /* Carte lumière : arc de luminosité en dégradé (voir glass-light-slider-stroke).
+       Les styles de la carte sont des feuilles adoptées, appliquées APRÈS ce
+       <style> card-mod : il faut un sélecteur plus spécifique (#slider). */
+    #slider > ha-control-circular-slider {
+      --control-circular-slider-color: var(--glass-light-slider-stroke, var(--primary-color));
+    }
+    /* Carte lumière : éteinte, l'ampoule prend --state-icon-color (braise vive)
+       et paraît plus « allumée » qu'allumée. Gris inactif, comme les tuiles. */
+    .light-button:not(.state-on):not(.state-unavailable) {
+      color: var(--state-inactive-color);
     }
     ha-card.glass-strong {
       --ha-card-background: var(--glass-surface-strong);
@@ -1174,7 +1254,8 @@ Braise Glass Lite:
     dark:
       <<: *dark
       glass-surface: &lite_d_surface "linear-gradient(160deg, rgba(48, 32, 26, 0.80) 0%, rgba(26, 18, 16, 0.86) 45%, rgba(20, 12, 10, 0.90) 100%)"
-      ha-card-background: *lite_d_surface
+      glass-surface-flat: &lite_d_surface_flat "rgba(26, 18, 16, 0.86)"
+      ha-card-background: *lite_d_surface_flat
       app-header-background-color: "rgba(10, 7, 6, 0.95)"
       ha-dialog-surface-background: "rgba(22, 15, 13, 0.97)"
       bubble-pop-up-background-color: "rgba(16, 11, 10, 0.96)"
@@ -1182,7 +1263,8 @@ Braise Glass Lite:
     light:
       <<: *light
       glass-surface: &lite_l_surface "linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 249, 244, 0.86) 50%, rgba(255, 232, 214, 0.80) 100%)"
-      ha-card-background: *lite_l_surface
+      glass-surface-flat: &lite_l_surface_flat "rgba(255, 249, 244, 0.86)"
+      ha-card-background: *lite_l_surface_flat
       app-header-background-color: "rgba(252, 246, 240, 0.96)"
       ha-dialog-surface-background: "rgba(255, 250, 246, 0.98)"
       bubble-pop-up-background-color: "rgba(252, 246, 240, 0.97)"

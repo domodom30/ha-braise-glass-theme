@@ -1,2 +1,5 @@
 __pycache__/
 .playwright-mcp/
+
+# Aperçus synthétiques générés par tools/preview.py
+assets/preview_*.png

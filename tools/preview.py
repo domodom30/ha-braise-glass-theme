@@ -20,7 +20,13 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 # Thème → préfixe des captures
-THEMES = {"Braise Glass": "preview", "Braise Glass Amethyst": "preview_amethyst"}
+THEMES = {
+    "Braise Glass": "preview",
+    "Braise Glass Amethyst": "preview_amethyst",
+    "Braise Glass Lagoon": "preview_lagoon",
+    "Braise Glass Sapphire": "preview_sapphire",
+    "Braise Glass Fuchsia": "preview_fuchsia",
+}
 
 TILES = [
     ("mdi-lightbulb", "Salon", "Allumée · 80 %", "light"),
@@ -91,12 +97,12 @@ def tiles() -> str:
 def main(chrome: str) -> None:
     themes = yaml.safe_load((ROOT / "themes" / "braise_glass.yaml").read_text(encoding="utf-8"))
     jobs = [(name, prefix, mode) for name, prefix in THEMES.items() for mode in ("dark", "light")]
-    with tempfile.TemporaryDirectory() as tmp:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         for name, prefix, mode in jobs:
             page = Path(tmp) / f"{prefix}_{mode}.html"
             page.write_text(PAGE.format(vars=theme_vars(themes, name, mode), tiles=tiles()), encoding="utf-8")
             out = ROOT / "assets" / f"{prefix}_{mode}.png"
-            subprocess.run([chrome, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,640",
+            subprocess.run([chrome, "--headless=new", f"--user-data-dir={Path(tmp) / f'chrome_{prefix}_{mode}'}", "--disable-gpu", "--hide-scrollbars", "--window-size=1280,640",
                             "--virtual-time-budget=4000", f"--screenshot={out}", page.as_uri()],
                            check=True, capture_output=True)
             print(out)
