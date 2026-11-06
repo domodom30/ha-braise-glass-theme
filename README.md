@@ -17,12 +17,52 @@ wall tablets. The same design is available in **five colourways**.
 
 ### Colourways
 
-Click a colour to preview it.
+Click a colour to show its screenshots.
 
-| Mode | Colourways |
+<details>
+<summary><img src="https://img.shields.io/badge/Braise-FF6A1F?style=for-the-badge" alt="Braise"></summary>
+
+| Dark | Light |
 |---|---|
-| Dark | [![Braise](https://img.shields.io/badge/Braise-FF6A1F?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png) [![Amethyst](https://img.shields.io/badge/Amethyst-B274FC?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_dark.png) [![Lagoon](https://img.shields.io/badge/Lagoon-00B6B3?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_dark.png) [![Sapphire](https://img.shields.io/badge/Sapphire-2C86FE?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_dark.png) [![Fuchsia](https://img.shields.io/badge/Fuchsia-F261B5?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_dark.png) |
-| Light | [![Braise](https://img.shields.io/badge/Braise-FF6A1F?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png) [![Amethyst](https://img.shields.io/badge/Amethyst-B274FC?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_light.png) [![Lagoon](https://img.shields.io/badge/Lagoon-00B6B3?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_light.png) [![Sapphire](https://img.shields.io/badge/Sapphire-2C86FE?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_light.png) [![Fuchsia](https://img.shields.io/badge/Fuchsia-F261B5?style=for-the-badge)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_light.png) |
+| [![Braise Glass — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_dark.png) | [![Braise Glass — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_braise_light.png) |
+
+</details>
+
+<details>
+<summary><img src="https://img.shields.io/badge/Amethyst-B274FC?style=for-the-badge" alt="Amethyst"></summary>
+
+| Dark | Light |
+|---|---|
+| [![Braise Glass Amethyst — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_dark.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_dark.png) | [![Braise Glass Amethyst — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_light.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_amethyst_light.png) |
+
+</details>
+
+<details>
+<summary><img src="https://img.shields.io/badge/Lagoon-00B6B3?style=for-the-badge" alt="Lagoon"></summary>
+
+| Dark | Light |
+|---|---|
+| [![Braise Glass Lagoon — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_dark.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_dark.png) | [![Braise Glass Lagoon — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_light.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_lagoon_light.png) |
+
+</details>
+
+<details>
+<summary><img src="https://img.shields.io/badge/Sapphire-2C86FE?style=for-the-badge" alt="Sapphire"></summary>
+
+| Dark | Light |
+|---|---|
+| [![Braise Glass Sapphire — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_dark.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_dark.png) | [![Braise Glass Sapphire — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_light.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_sapphire_light.png) |
+
+</details>
+
+<details>
+<summary><img src="https://img.shields.io/badge/Fuchsia-F261B5?style=for-the-badge" alt="Fuchsia"></summary>
+
+| Dark | Light |
+|---|---|
+| [![Braise Glass Fuchsia — dark](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_dark.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_dark.png) | [![Braise Glass Fuchsia — light](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_light.png)](https://raw.githubusercontent.com/domodom30/ha-braise-glass-theme/main/assets/vitrine_fuchsia_light.png) |
+
+</details>
 
 ## Features
 
