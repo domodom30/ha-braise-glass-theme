@@ -4,6 +4,7 @@
 [![Validate](https://img.shields.io/github/actions/workflow/status/domodom30/ha-braise-glass-theme/validate.yml?branch=main&label=validate&style=flat-square)](https://github.com/domodom30/ha-braise-glass-theme/actions/workflows/validate.yml)
 [![Release](https://img.shields.io/github/v/release/domodom30/ha-braise-glass-theme?style=flat-square)](https://github.com/domodom30/ha-braise-glass-theme/releases)
 [![License](https://img.shields.io/github/license/domodom30/ha-braise-glass-theme?style=flat-square)](LICENSE)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white)](https://ko-fi.com/domodom)
 
 An **ember glassmorphism** theme for Home Assistant: smoked black glass, glowing
 orange edges and embers rising over a perspective floor. It comes with a dark mode,
@@ -191,6 +192,12 @@ python tools/validate_theme.py
 To add a colourway, add an entry to `VARIANTS` (name, YAML anchor prefix, hue rotation in degrees), then rebuild and validate.
 
 CI runs the HACS validation. It also checks that `themes/braise_glass.yaml` matches `src/` and `assets/`.
+
+## Support
+
+If you like this theme, you can support its development on Ko-fi:
+
+[![Support me on Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/domodom)
 
 ## Credits
 
