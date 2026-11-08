@@ -420,7 +420,7 @@ Braise Glass: &braise_glass
       glass-shadow-dialog: &d_shadow_dialog "0 30px 80px rgba(0, 0, 0, 0.70), 0 0 0 1px rgba(255, 122, 26, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(255, 106, 31, 0.50)"
       glass-glow: "0 0 18px rgba(255, 106, 31, 0.50)"
       glass-scrollbar: &d_scrollbar "rgba(255, 122, 26, 0.32)"
-      glass-page-background: &d_page "url(\"{{BACKDROP_DARK}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 77, 18, 0.55) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 122, 26, 0.18) 0%, transparent 60%) fixed, radial-gradient(ellipse 40% 45% at 5% 52%, rgba(255, 59, 48, 0.14) 0%, transparent 60%) fixed, linear-gradient(165deg, #0C0A0B 0%, #070607 50%, #0B0706 100%) fixed"
+      glass-page-background: "url(\"{{BACKDROP_DARK}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 77, 18, 0.55) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 122, 26, 0.18) 0%, transparent 60%) fixed, radial-gradient(ellipse 40% 45% at 5% 52%, rgba(255, 59, 48, 0.14) 0%, transparent 60%) fixed, linear-gradient(165deg, #0C0A0B 0%, #070607 50%, #0B0706 100%) fixed"
 
       # --- Textes ------------------------------------------------------------
       primary-text-color: &d_text "#FFF4EC"
@@ -447,7 +447,9 @@ Braise Glass: &braise_glass
       card-background-color: *d_surface_solid
       rgb-primary-background-color: "14, 10, 9"
       rgb-card-background-color: "26, 18, 16"
-      lovelace-background: *d_page
+      # Renvoi par var() plutôt qu'alias YAML : HA déplie les alias et
+      # enverrait le décor (≈ 28 Ko) deux fois à chaque client.
+      lovelace-background: "var(--glass-page-background)"
       divider-color: *d_divider
       outline-color: *d_border
       outline-hover-color: *d_border_strong
@@ -720,7 +722,7 @@ Braise Glass: &braise_glass
       glass-shadow-dialog: &l_shadow_dialog "0 30px 80px rgba(120, 50, 10, 0.26), 0 0 0 1px rgba(255, 255, 255, 0.70), inset 0 1px 0 rgba(255, 255, 255, 0.95)"
       glass-glow: "0 0 16px rgba(224, 86, 15, 0.35)"
       glass-scrollbar: &l_scrollbar "rgba(194, 65, 12, 0.28)"
-      glass-page-background: &l_page "url(\"{{BACKDROP_LIGHT}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 122, 46, 0.32) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 194, 122, 0.32) 0%, transparent 60%) fixed, linear-gradient(165deg, #FCF7F2 0%, #F8EEE5 50%, #F4E6DA 100%) fixed"
+      glass-page-background: "url(\"{{BACKDROP_LIGHT}}\") center bottom / cover no-repeat fixed, radial-gradient(ellipse 90% 55% at 50% 115%, rgba(255, 122, 46, 0.32) 0%, transparent 65%) fixed, radial-gradient(ellipse 45% 40% at 90% 8%, rgba(255, 194, 122, 0.32) 0%, transparent 60%) fixed, linear-gradient(165deg, #FCF7F2 0%, #F8EEE5 50%, #F4E6DA 100%) fixed"
 
       # --- Textes ------------------------------------------------------------
       primary-text-color: &l_text "#2B1A12"
@@ -747,7 +749,9 @@ Braise Glass: &braise_glass
       card-background-color: *l_surface_solid
       rgb-primary-background-color: "251, 244, 238"
       rgb-card-background-color: "255, 250, 246"
-      lovelace-background: *l_page
+      # Renvoi par var() plutôt qu'alias YAML : HA déplie les alias et
+      # enverrait le décor (≈ 28 Ko) deux fois à chaque client.
+      lovelace-background: "var(--glass-page-background)"
       divider-color: *l_divider
       outline-color: *l_border_strong
       outline-hover-color: *l_border_glow
